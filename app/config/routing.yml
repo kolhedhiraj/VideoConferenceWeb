@@ -1,0 +1,4 @@
+video_conference_log_in:
+    resource: "@VideoConferenceLogInBundle/Resources/config/routing.yml"
+    prefix:   /
+

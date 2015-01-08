@@ -22,10 +22,16 @@ security:
     # for specific sections of your app
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
+        
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        # the login page has to be accessible for everybody
+            anonymous: ~
+            http_basic: ~
+        default:
+            anonymous: ~
+            http_basic: ~
+            # the login page has to be accessible for everybody
         demo_login:
             pattern:  ^/demo/secured/login$
             security: false
@@ -42,11 +48,13 @@ security:
                 path:   _demo_logout
                 target: _demo
             #anonymous: ~
-            #http_basic:
+            #http_basic: ~
             #    realm: "Secured Demo Area"
 
     # with these settings you can restrict or allow access for different parts
     # of your application based on roles, ip, host or methods
     # http://symfony.com/doc/current/book/security.html#security-book-access-control-matching-options
     access_control:
+      # require ROLE_ADMIN for /* itt nekem /admin kellene, de nem mukodik a route hozza
+         - { path: ^/login/admin, roles: ROLE_ADMIN }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
