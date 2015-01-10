@@ -1,11 +1,47 @@
+<!doctype html>
 <html>
+<meta charset="UTF8">
 <title>Video Conference LogIn</title> {#Hello, ez az uj bundle, juppiii
 {{ name }}!#} {# {% block title "Video Conference LogIn Page" %} #}
-<head></head>
+<head>
+<style>
+a:link {
+	font-family: Roboto, sans-serif;
+	font-style: bold;
+	color: white;
+	text-decoration: none;
+	font-size: 120%;
+}
 
-<body>
+a:visited {
+	font-family: Roboto, sans-serif;
+	font-style: bold;
+	color: white;
+	text-decoration: none;
+	font-size: 120%;
+}
+
+a:hover {
+	font-family: Roboto, sans-serif;
+	color: #8C8C8C;
+	text-decoration: none;
+	font-style: italic;
+	font-size: 120%;
+}
+
+a:active {
+	font-family: Roboto, sans-serif;
+	font-style: bold;
+	color: white;
+	text-decoration: none;
+	font-size: 120%;
+}
+</style>
+</head>
+
+<body bgcolor="#404040">
 	{% block content %}
-	<h1 class="title">LogIn</h1>
-	{% endblock %}
+	<h1 class="title" style="color: white">LogIn</h1>
+	<a href="register">Register</a> {% endblock %}
 </body>
 </html>

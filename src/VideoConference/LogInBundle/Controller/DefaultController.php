@@ -17,7 +17,7 @@ class DefaultController extends Controller {
 	}
 	
 /**
- *@Route("/admin")
+ *@Route("/loggedin")
  */
 	public function adminAction() {
 		return $this->render('VideoConferenceLogInBundle:Default:login.html.twig');
