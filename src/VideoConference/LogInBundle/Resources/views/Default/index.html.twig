@@ -1,12 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<meta charset="UTF8">
-<title>Video Conference LogIn</title> {#Hello, ez az uj bundle, juppiii
-{{ name }}!#} {# {% block title "Video Conference LogIn Page" %} #}
 <head>
+<meta charset="UTF-8" />
+<title>Index</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/ui-darkness/jquery-ui.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script>
+  $(function() {
+    $( "input[type=submit], button" )
+      .button();
+  });
+  </script>
+
+</head>
 <style>
-a:link {
+body {
 	font-family: Roboto, sans-serif;
+}
+
+a:link {
 	font-style: bold;
 	color: white;
 	text-decoration: none;
@@ -14,7 +30,6 @@ a:link {
 }
 
 a:visited {
-	font-family: Roboto, sans-serif;
 	font-style: bold;
 	color: white;
 	text-decoration: none;
@@ -22,26 +37,60 @@ a:visited {
 }
 
 a:hover {
-	font-family: Roboto, sans-serif;
 	color: #8C8C8C;
 	text-decoration: none;
-	font-style: italic;
+	font-style: bold;
 	font-size: 120%;
 }
 
 a:active {
-	font-family: Roboto, sans-serif;
 	font-style: bold;
 	color: white;
 	text-decoration: none;
 	font-size: 120%;
 }
-</style>
-</head>
 
+label {
+	margin-right: 10px
+}
+
+input[type="text"] {
+	margin-right: 10px
+}
+
+input[type="submit"] {
+	font-size: 80%;
+}
+
+form {
+	line-height: 200%;
+}
+
+li {
+	color: white;
+}
+</style>
 <body bgcolor="#404040">
 	{% block content %}
-	<h1 class="title" style="color: white">LogIn</h1>
-	<a href="register">Register</a> {% endblock %}
+	<div style="color: white; margin-left: 40px; margin-top: 40px">
+		{% if is_granted('ROLE_USER') %} <p><span style="margin-left: 30px">{{"Logged in as: "}}</span><strong
+			style="font-style: italic;">{{app.user.username }} | </strong> <a
+			href="logout">Log Out</a><span></span></p> {% endif %}
+		<ul id="menu" style="line-height: 150%">
+			{% if is_granted('ROLE_USER')==false %}
+			<li><a href="login">Log In</a></li> {% endif %}
+			<li><a href="profile">Profile</a></li>
+			<li><a href="register">Register</a></li>
+		</ul>
+	</div><br>
+	<div>
+	{% if is_granted('ROLE_USER') %}
+	<img src="apple-touch-icon.png" style="margin-left: 60px">
+	{% else %}
+	<span style="color:white;margin-left: 60px">You must log in to see this content</span>
+	{% endif %}
+	</div>
+	
+	{% endblock %}
 </body>
 </html>
