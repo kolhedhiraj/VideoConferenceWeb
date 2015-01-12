@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>{%- block title %}{% endblock -%}</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/ui-darkness/jquery-ui.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script>
+  $(function() {
+    $( "input[type=submit], button" )
+      .button();
+  });
+  </script>
+</head>
+<style>
+body {
+	font-family: Roboto, sans-serif;
+}
+
+a:link {
+	font-style: bold;
+	color: white;
+	text-decoration: none;
+	font-size: 120%;
+}
+
+a:visited {
+	font-style: bold;
+	color: white;
+	text-decoration: none;
+	font-size: 120%;
+}
+
+a:hover {
+	color: #8C8C8C;
+	text-decoration: none;
+	font-style: bold;
+	font-size: 120%;
+}
+
+a:active {
+	font-style: bold;
+	color: white;
+	text-decoration: none;
+	font-size: 120%;
+}
+
+label {
+	margin-right: 10px
+}
+
+input[type="text"] {
+	margin-right: 10px
+}
+
+input[type="submit"] {
+	font-size: 80%;
+}
+
+form {
+	line-height: 200%;
+}
+
+li {
+	color: white;
+}
+</style>
+<body bgcolor="#404040">
+	<div style="float: right; color: white;margin-right: 20px">
+		<a href={{ path("default_locale",{'_locale':'hu'})}}>HU</a> <span>|</span>
+		<a href={{ path("default_locale",{'_locale':'en'})}}>EN</a> {{
+		app.request.locale }}
+	</div>
+	<div style="color: white; margin-left: 40px; margin-top: 40px">
+		{% if is_granted('ROLE_USER') %}
+		<p>
+			<span style="margin-left: 30px">{{"Logged in as: "}}</span><strong
+				style="font-style: italic;">{{app.user.username }} | </strong> <a
+				href="logout">Log Out</a><span></span>
+		</p>
+		{% endif %}
+		<ul id="menu" style="line-height: 150%">
+			{% if is_granted('ROLE_USER')==false %}
+			<li><a href={{ path("fos_user_security_login") }}>Log In</a></li> {%
+			endif %} {% if is_granted('ROLE_USER') %}
+			<li><a href={{ path("fos_user_profile_show") }}>Profile</a></li> {%
+			endif %}
+			<li><a href={{ path("fos_user_registration_register") }}>Register</a></li>
+		</ul>
+	</div>
+	<div style="margin-left: 60px">
+	{% block content %} {% endblock %}
+	</div>
+</body>
+</html>
