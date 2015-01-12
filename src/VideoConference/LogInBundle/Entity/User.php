@@ -5,6 +5,8 @@ namespace VideoConference\LogInBundle\Entity;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * VideoConference\LogInBundle\Entity
@@ -13,6 +15,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity()
  */
 class User extends BaseUser {
+	public function __construct(){
+		$this->rooms = new ArrayCollection();
+	}
 	/**
 	* @ORM\Id
 	* @ORM\Column(type="integer")
@@ -27,6 +32,11 @@ class User extends BaseUser {
 	 * @ORM\Column(type="string",length=255,name="last_name")
 	 */
 	protected $lastName;
+	/**
+	 * @ORM\OneToMany(targetEntity="Room",mappedBy="owner")
+	 * 
+	 */
+	protected $rooms;
 	
 	public function getFirstName() {
 		return $this->firstName;
@@ -42,5 +52,13 @@ class User extends BaseUser {
 		$this->lastName = $lastName;
 		return $this;
 	}
+	public function getRooms() {
+		return $this->rooms;
+	}
+	public function setRooms($rooms) {
+		$this->rooms = $rooms;
+		return $this;
+	}
+	
 	
 }

@@ -13,7 +13,9 @@ class LoadUserData implements FixtureInterface
 	{
 		$userAdmin = new User();
 		$userAdmin->setUsername('admin');
-		$userAdmin->setPassword('test');
+		$userAdmin->setPlainPassword('test');
+		$userAdmin->setEnabled(true);
+		$userAdmin->setRoles(array('ROLE_ADMIN'));
 		$userAdmin->setEmail('test@test.com');
 		$userAdmin->setFirstName('elek');
 		$userAdmin->setLastName('test');
