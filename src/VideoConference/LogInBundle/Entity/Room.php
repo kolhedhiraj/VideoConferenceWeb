@@ -4,6 +4,7 @@ namespace VideoConference\LogInBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use VideoConference\LogInBundle\Entity\User;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 
 /**
@@ -37,10 +38,13 @@ class Room{
 	 * @ORM\ManyToOne(targetEntity="User") 
 	 */
 	protected $owner;
+	
 	/**
+	 * @Gedmo\Timestampable(on="create")
 	 * @ORM\Column(type="datetime",name="createdat")
 	 */
 	protected $createdAt;
+	
 	/**
 	 * @ORM\Column(type="integer",name="max_users")
 	 */

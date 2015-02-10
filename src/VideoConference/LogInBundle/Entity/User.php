@@ -16,7 +16,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class User extends BaseUser {
 	public function __construct(){
+		parent::__construct();
 		$this->rooms = new ArrayCollection();
+		$this->firstName = "teszt";
+		$this->lastName="elek";
 	}
 	/**
 	* @ORM\Id

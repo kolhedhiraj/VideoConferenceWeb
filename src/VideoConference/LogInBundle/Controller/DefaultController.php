@@ -48,7 +48,6 @@ class DefaultController extends Controller {
 		if($form->isValid()){
 			$em=$this->getDoctrine()->getManager();
 			$room->setToken('tralala');
-			$room->setCreatedAt(new \DateTime());
 			$room->setOwner($this->getUser());
 			$em->persist($room);
 			$em->flush();

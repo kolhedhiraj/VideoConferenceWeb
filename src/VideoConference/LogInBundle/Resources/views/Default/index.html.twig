@@ -3,8 +3,7 @@ content %}
 <div>
 	{% if is_granted('ROLE_USER') %} <img src={{ asset('apple-touch-icon.png') }}
 		style="margin-left: 60px"> {% else %} <span
-		style="color: white; margin-left: 60px">You must log in to see this
-		content</span> {% endif %}
+		style="color: white; margin-left: 60px">{{  'You must log in to see this content' | trans }}</span> {% endif %}
 		<ul>
 		{% for user in users %}
 		<li>{{ loop.index }}. {{ user.firstName }} {{ user.lastName }}
@@ -18,7 +17,7 @@ content %}
 		</ul>
 		<ul>
 		{% for room in rooms %}
-		<li>{{ loop.index }}. {{ room.name }} {{ room.owner }} {{ room.description }}</li>
+		<li>{{ loop.index }}. {{ room.name }} {{ room.owner }} {{ room.description }} {{ room.createdat|date }}</li>
 		{% endfor %}
 		</ul>
 </div>

@@ -89,11 +89,11 @@ li {
 		{% endif %}
 		<ul id="menu" style="line-height: 150%">
 			{% if is_granted('ROLE_USER')==false %}
-			<li><a href={{ path("fos_user_security_login") }}>Log In</a></li> {%
+			<li><a href={{ path("fos_user_security_login") }}>{% trans %}Log In{% endtrans %}</a></li> {%
 			endif %} {% if is_granted('ROLE_USER') %}
-			<li><a href={{ path("fos_user_profile_show") }}>Profile</a></li> {%
+			<li><a href={{ path("fos_user_profile_show") }}>{% trans %}Profile{% endtrans %}</a></li> {%
 			endif %}
-			<li><a href={{ path("fos_user_registration_register") }}>Register</a></li>
+			<li><a href={{ path("fos_user_registration_register") }}>{% trans %}Register{% endtrans %}</a></li>
 		</ul>
 	</div>
 	<div style="margin-left: 60px">

@@ -13,7 +13,8 @@ class AppKernel extends Kernel {
 				new Doctrine\Bundle\DoctrineBundle\DoctrineBundle (),
 				new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle (),
 				new VideoConference\LogInBundle\VideoConferenceLogInBundle (),
-				new FOS\UserBundle\FOSUserBundle () 
+				new FOS\UserBundle\FOSUserBundle (),
+				new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle()
 		)
 		;
 		
