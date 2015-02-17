@@ -65,6 +65,10 @@ button[type="submit"] {
 	font-size: 80%;
 }
 
+button[type="button"] {
+	font-size: 80%;
+}
+
 form {
 	line-height: 200%;
 }
@@ -91,7 +95,7 @@ li {
 			{% if is_granted('ROLE_USER')==false %}
 			<li><a href={{ path("fos_user_security_login") }}>{% trans %}Log In{% endtrans %}</a></li> {%
 			endif %} {% if is_granted('ROLE_USER') %}
-			<li><a href={{ path("fos_user_profile_show") }}>{% trans %}Profile{% endtrans %}</a></li> {%
+			<li><a href={{ path("fos_user_profile_edit") }}>{% trans %}Profile{% endtrans %}</a></li> {%
 			endif %}
 			<li><a href={{ path("fos_user_registration_register") }}>{% trans %}Register{% endtrans %}</a></li>
 		</ul>

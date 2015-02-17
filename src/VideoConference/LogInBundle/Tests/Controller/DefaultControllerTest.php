@@ -80,4 +80,31 @@ class DefaultControllerTest extends WebTestCase {
 		$this->assertEquals ( 200, $crawler->getStatusCode () );
 		
 	}
+	
+	public function testManageRooms() {
+		$client = static::createClient ();
+		$client->followRedirects(true);
+		$crawler = $client->request ( 'GET', '/manage_rooms' );
+	
+		// Sikeres-e a request
+		$this->assertEquals ( 200, $client->getResponse ()->getStatusCode () );
+	
+		//Tartalmaz-e ilyen elemeket
+		$this->assertTrue ( $crawler->filter ( 'html:contains("Name")' )->count () > 0 );
+		$this->assertTrue ( $crawler->filter ( 'html:contains("Password")' )->count () > 0 );
+		
+		// Form teszt
+		$buttonCrawlerNode = $crawler->selectButton ( 'Register' );
+		$form = $buttonCrawlerNode->form ();
+		$form ['fos_user_registration_form[username]'] = 'test_user';
+		$form ['fos_user_registration_form[email]'] = 'test_email@test.com';
+		$form ['fos_user_registration_form[plainPassword][first]'] = 'test_password';
+		$form ['fos_user_registration_form[plainPassword][second]'] = 'test_password';
+		//print(implode(" ",$form->getValues()));
+		$client->submit ( $form );
+		$crawler=$client->getResponse ();
+		//print($crawler);
+		$this->assertEquals ( 200, $crawler->getStatusCode () );
+	
+	}
 }

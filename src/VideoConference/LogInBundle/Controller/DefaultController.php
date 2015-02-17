@@ -59,4 +59,29 @@ class DefaultController extends Controller {
 				'form' => $form->createView () 
 		) );
 	}
+	
+	/**
+	 * @Route("/manage_rooms",name="default_manage_rooms")
+	 * @Security("has_role('ROLE_USER')")
+	 */
+	public function manageRoomsAction(Request $request) {
+		$userRepository = $this->getDoctrine ()->getRepository ( 'VideoConferenceLogInBundle:User' );
+		$roomRepository = $this->getDoctrine()->getRepository('VideoConferenceLogInBundle:Room');
+		return $this->render("VideoConferenceLogInBundle:Default:manageRooms.html.twig",
+				array('rooms'=>$this->getUser()->getRooms()));
+		
+	}
+	
+	/**
+	 * @Route("/delete_room",name="default_delete_room")
+	 * @Security("has_role('ROLE_USER')")
+	 */
+	public function deleteRoomAction(Request $request) {
+		$userRepository = $this->getDoctrine ()->getRepository ( 'VideoConferenceLogInBundle:User' );
+		$roomRepository = $this->getDoctrine()->getRepository('VideoConferenceLogInBundle:Room');
+		return $this->render("VideoConferenceLogInBundle:Default:manageRooms.html.twig",
+				array('rooms'=>$this->getUser()->getRooms()));
+	
+	}
+		
 }
