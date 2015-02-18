@@ -5,9 +5,10 @@
 	{% if is_granted('ROLE_USER') %} 
 		<ul>
 		{% for room in rooms %}
-		<li>{{ room.name }} {{ room.description }}
-		 <button type="button" onclick="">{% trans %}Modify{% endtrans %}</button>
-		 <button type="button">{% trans %}Delete{% endtrans %}</button><br><br></li>
+		<li>{{room.id}} {{ room.name }} {{ room.description }}
+		 <button type="button"><a href={{ path("default_modify_room",{'id': room.id}) }}>{% trans %}Modify{% endtrans %}</a></button>
+		 <button type="button"><a href={{ path("default_delete_room",{'id': room.id}) }}>
+		 {% trans %}Delete{% endtrans %}</a></button><br><br></li>
 		{% endfor %}
 		</ul>
 		{% endif %}

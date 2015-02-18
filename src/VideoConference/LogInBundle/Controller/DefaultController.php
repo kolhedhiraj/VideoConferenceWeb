@@ -17,11 +17,11 @@ class DefaultController extends Controller {
 	public function indexAction() {
 		// kibányásztuk a repository class-t, ezzel tudunk lekérdezéseket csinálni
 		$userRepository = $this->getDoctrine ()->getRepository ( 'VideoConferenceLogInBundle:User' );
-		$roomRepository = $this->getDoctrine()->getRepository('VideoConferenceLogInBundle:Room');
+		$roomRepository = $this->getDoctrine ()->getRepository ( 'VideoConferenceLogInBundle:Room' );
 		
 		return $this->render ( 'VideoConferenceLogInBundle:Default:index.html.twig', array (
 				'users' => $userRepository->findAll (),
-				'rooms' => $roomRepository->findAll(),
+				'rooms' => $roomRepository->findAll () 
 		) );
 	}
 	// Itt a _locale-t kapjuk meg paraméternek majd, pl hu vagy en
@@ -38,22 +38,22 @@ class DefaultController extends Controller {
 	 */
 	public function createRoomAction(Request $request) {
 		$room = new Room ();
-		$form = $this->createFormBuilder ( $room )->add ( 'name' )->add ( 'description' )->add ( 'maxUsers' )
-		->add ( 'isPublic',null,array('required'=>false,) )->add ( 'save', 'submit', array (
+		$form = $this->createFormBuilder ( $room )->add ( 'name' )->add ( 'description' )->add ( 'maxUsers' )->add ( 'isPublic', null, array (
+				'required' => false 
+		) )->add ( 'save', 'submit', array (
 				'label' => 'Create Room' 
 		) )->getForm ();
 		
-		$form->handleRequest($request);
+		$form->handleRequest ( $request );
 		
-		if($form->isValid()){
-			$em=$this->getDoctrine()->getManager();
-			$room->setToken('tralala');
-			$room->setOwner($this->getUser());
-			$em->persist($room);
-			$em->flush();
-			return $this->redirect($this->generateUrl('default_index'));
+		if ($form->isValid ()) {
+			$em = $this->getDoctrine ()->getManager ();
+			$room->setToken ( 'tralala' );
+			$room->setOwner ( $this->getUser () );
+			$em->persist ( $room );
+			$em->flush ();
+			return $this->redirect ( $this->generateUrl ( 'default_index' ) );
 		}
-		
 		
 		return $this->render ( "VideoConferenceLogInBundle:Default:createRoom.html.twig", array (
 				'form' => $form->createView () 
@@ -65,23 +65,48 @@ class DefaultController extends Controller {
 	 * @Security("has_role('ROLE_USER')")
 	 */
 	public function manageRoomsAction(Request $request) {
-		$userRepository = $this->getDoctrine ()->getRepository ( 'VideoConferenceLogInBundle:User' );
-		$roomRepository = $this->getDoctrine()->getRepository('VideoConferenceLogInBundle:Room');
-		return $this->render("VideoConferenceLogInBundle:Default:manageRooms.html.twig",
-				array('rooms'=>$this->getUser()->getRooms()));
-		
+		return $this->render ( "VideoConferenceLogInBundle:Default:manageRooms.html.twig", array (
+				'rooms' => $this->getUser ()->getRooms () 
+		) );
 	}
 	
 	/**
-	 * @Route("/delete_room",name="default_delete_room")
+	 * @Route("/delete_room_{id}",name="default_delete_room")
 	 * @Security("has_role('ROLE_USER')")
 	 */
-	public function deleteRoomAction(Request $request) {
-		$userRepository = $this->getDoctrine ()->getRepository ( 'VideoConferenceLogInBundle:User' );
-		$roomRepository = $this->getDoctrine()->getRepository('VideoConferenceLogInBundle:Room');
-		return $this->render("VideoConferenceLogInBundle:Default:manageRooms.html.twig",
-				array('rooms'=>$this->getUser()->getRooms()));
-	
+	public function deleteRoomAction(Request $request, $id) {
+		$em = $this->getDoctrine ()->getManager ();
+		$room = $em->getRepository ( 'VideoConferenceLogInBundle:Room' )->find ( $id );
+		if ($room != null) {
+			$em->remove ( $room );
+			$em->flush ();
+		}
+		return $this->redirectToRoute ( 'default_manage_rooms' );
 	}
+	
+	/**
+	 * @Route("/modify_room_{id}",name="default_modify_room")
+	 * @Security("has_role('ROLE_USER')")
+	 */
+	public function modifyRoomAction(Request $request, $id) {
+		$room = $this->getDoctrine ()->getRepository ( 'VideoConferenceLogInBundle:Room' )->find ( $id );
+		$form = $this->createFormBuilder ()->add ( 'name' )->add ( 'description' )->add ( 'save', 'submit', array (
+				'label' => 'Modify Room' 
+		) )->getForm ();
 		
+		$form->handleRequest ( $request );
+		
+		if ($form->isValid()) {
+			$em = $this->getDoctrine ()->getManager ();
+			$room->setName ( $form->get('name')->getData() );
+			$room->setDescription( $form->get('description')->getData());
+			$em->persist($room);
+			$em->flush ();
+			return $this->redirect($this->generateUrl('default_manage_rooms'));
+		}
+		
+		return $this->render ( "VideoConferenceLogInBundle:Default:modifyRoom.html.twig", array (
+				'form' => $form->createView ()
+		) );
+	}
 }

@@ -1,5 +1,10 @@
-{% extends "VideoConferenceLogInBundle::layout.html.twig" %} {% block
-content %}
+{% extends "VideoConferenceLogInBundle::layout.html.twig" %} 
+
+{% block create_room %}
+<button type="button"><a href={{ path("default_create_room") }}>{% trans %}Create room{% endtrans %}</a></button><br><br>
+{% endblock %}
+
+{% block content %}
 <div>
 	{% if is_granted('ROLE_USER') %} <img src={{ asset('apple-touch-icon.png') }}
 		style="margin-left: 60px"> {% else %} <span
