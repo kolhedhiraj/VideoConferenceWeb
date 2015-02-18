@@ -1,4 +1,8 @@
-{% extends "VideoConferenceLogInBundle::layout.html.twig" %} {% block
+{% extends "VideoConferenceLogInBundle::layout.html.twig" %} 
+{% block title %}
+{% trans %}Rooms{% endtrans %}
+{% endblock %}
+{% block
 head %} {% endblock %} {% block create_room %} {% if
 is_granted('ROLE_USER') %}
 <a id="create_room" onclick="doSomething()"

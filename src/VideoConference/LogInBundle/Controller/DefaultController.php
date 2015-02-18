@@ -41,7 +41,7 @@ class DefaultController extends Controller {
 		$form = $this->createFormBuilder ( $room )->add ( 'name' )->add ( 'description' )->add ( 'maxUsers' )->add ( 'isPublic', null, array (
 				'required' => false 
 		) )->add ( 'save', 'submit', array (
-				'label' => 'Create Room' 
+				'label' => 'Create room' 
 		) )->getForm ();
 		
 		$form->handleRequest ( $request );
@@ -101,9 +101,10 @@ class DefaultController extends Controller {
 		->add ( 'maxUsers','integer',array('required' => false,'data'=>$room->getMaxUsers()))
 		->add ( 'isPublic', 'checkbox', array (
 				'label' => 'Public',
+				'required'=>false,
 				'data'=>$room->getIsPublic()
 		) )->add ( 'save', 'submit', array (
-				'label' => 'Modify Room' 
+				'label' => 'Modify room' 
 		) )->getForm ();
 		
 		$form->handleRequest ( $request );
@@ -123,4 +124,6 @@ class DefaultController extends Controller {
 				'form' => $form->createView () 
 		) );
 	}
+	
+	
 }

@@ -1,7 +1,8 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "VideoConferenceLogInBundle::layout.html.twig" %}
 {% block title %}
-{{ "Profile" }}
+{% trans %}Profile{% endtrans %}
 {% endblock %}
-{% block fos_user_content %}
+{% block content %}
 {% include "FOSUserBundle:Profile:edit_content.html.twig" %}
-{% endblock fos_user_content %}
+{% include "FOSUserBundle:ChangePassword:changePassword_content.html.twig" %}
+{% endblock content %}

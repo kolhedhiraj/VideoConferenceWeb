@@ -1,4 +1,8 @@
-{% extends "VideoConferenceLogInBundle::layout.html.twig" %} {% block
+{% extends "VideoConferenceLogInBundle::layout.html.twig" %}
+{% block title %}
+{% trans %}Modify room{% endtrans %}
+{% endblock %}
+ {% block
 content %}
 
 <div style="color: white";>{% if is_granted('ROLE_USER') %} <form method="POST">
