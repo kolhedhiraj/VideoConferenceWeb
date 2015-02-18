@@ -65,9 +65,15 @@ class DefaultController extends Controller {
 	 * @Security("has_role('ROLE_USER')")
 	 */
 	public function manageRoomsAction(Request $request) {
-		return $this->render ( "VideoConferenceLogInBundle:Default:manageRooms.html.twig", array (
-				'rooms' => $this->getUser ()->getRooms () 
-		) );
+		if ($this->getUser ()->getRooms ()->count () != null) {
+			return $this->render ( "VideoConferenceLogInBundle:Default:manageRooms.html.twig", array (
+					'rooms' => $this->getUser ()->getRooms () 
+			) );
+		} else {
+			return $this->render ( "VideoConferenceLogInBundle:Default:manageRooms.html.twig", array (
+					'rooms' => null 
+			) );
+		}
 	}
 	
 	/**
@@ -90,23 +96,31 @@ class DefaultController extends Controller {
 	 */
 	public function modifyRoomAction(Request $request, $id) {
 		$room = $this->getDoctrine ()->getRepository ( 'VideoConferenceLogInBundle:Room' )->find ( $id );
-		$form = $this->createFormBuilder ()->add ( 'name' )->add ( 'description' )->add ( 'save', 'submit', array (
+		$form = $this->createFormBuilder ()->add ( 'name',null,array('required' => false,'data'=>$room->getName()))
+		->add ( 'description',null,array('required' => false,'data'=>$room->getDescription()) )
+		->add ( 'maxUsers','integer',array('required' => false,'data'=>$room->getMaxUsers()))
+		->add ( 'isPublic', 'checkbox', array (
+				'label' => 'Public',
+				'data'=>$room->getIsPublic()
+		) )->add ( 'save', 'submit', array (
 				'label' => 'Modify Room' 
 		) )->getForm ();
 		
 		$form->handleRequest ( $request );
 		
-		if ($form->isValid()) {
+		if ($form->isValid ()) {
 			$em = $this->getDoctrine ()->getManager ();
-			$room->setName ( $form->get('name')->getData() );
-			$room->setDescription( $form->get('description')->getData());
-			$em->persist($room);
+			$room->setName ( $form->get ( 'name' )->getData () );
+			$room->setDescription ( $form->get ( 'description' )->getData () );
+			$room->setMaxUsers ( $form->get ( 'maxUsers' )->getData () );
+			$room->setIsPublic ( $form->get ( 'isPublic' )->getData () );
+			$em->persist ( $room );
 			$em->flush ();
-			return $this->redirect($this->generateUrl('default_manage_rooms'));
+			return $this->redirect ( $this->generateUrl ( 'default_manage_rooms' ) );
 		}
 		
 		return $this->render ( "VideoConferenceLogInBundle:Default:modifyRoom.html.twig", array (
-				'form' => $form->createView ()
+				'form' => $form->createView () 
 		) );
 	}
 }

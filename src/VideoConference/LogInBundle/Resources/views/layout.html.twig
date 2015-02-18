@@ -15,6 +15,15 @@
       .button();
   });
   </script>
+  <script>
+  $(function() {
+    $('#create_room')
+      .button();
+    $('#create_room').css("font-size","80%");
+  });
+  </script>
+  {% block head %}
+  {% endblock %}
 </head>
 <style>
 body {
@@ -86,9 +95,9 @@ li {
 	<div style="color: white; margin-left: 40px; margin-top: 40px">
 		{% if is_granted('ROLE_USER') %}
 		<p>
-			<span style="margin-left: 30px">{{"Logged in as: "}}</span><strong
+			<span style="margin-left: 30px">{% trans %}Logged in{% endtrans %}: </span><strong
 				style="font-style: italic;">{{app.user.username }} | </strong> <a
-				href="logout">Log Out</a><span></span>
+				href="logout">{% trans %}Log Out{% endtrans %}</a><span></span>
 		</p>
 		{% endif %}
 		<ul id="menu" style="line-height: 150%">

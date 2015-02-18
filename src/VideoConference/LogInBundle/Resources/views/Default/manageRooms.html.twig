@@ -1,17 +1,32 @@
-{% extends "VideoConferenceLogInBundle::layout.html.twig" %} 
-{% block content %}
+{% extends "VideoConferenceLogInBundle::layout.html.twig" %} {% block
+head %} {% endblock %} {% block create_room %} {% if
+is_granted('ROLE_USER') %}
+<a id="create_room" onclick="doSomething()"
+	href={{ path("default_create_room") }}>{% trans %}Create room{%
+	endtrans %}</a>
+<br>
+<br>
+{% endif %} {% endblock %} {% block content %}
 
 <div>
-	{% if is_granted('ROLE_USER') %} 
-		<ul>
+	{% if is_granted('ROLE_USER') %} {% if rooms is null%} <span
+		style="color: white">{% trans %}There are no rooms{% endtrans %}</span>
+	{% else %}
+	<ul>
 		{% for room in rooms %}
-		<li>{{room.id}} {{ room.name }} {{ room.description }}
-		 <button type="button"><a href={{ path("default_modify_room",{'id': room.id}) }}>{% trans %}Modify{% endtrans %}</a></button>
-		 <button type="button"><a href={{ path("default_delete_room",{'id': room.id}) }}>
-		 {% trans %}Delete{% endtrans %}</a></button><br><br></li>
-		{% endfor %}
-		</ul>
-		{% endif %}
+		<li><b>{% trans %}Name{% endtrans %}:</b> {{ room.name }} <br>
+		<b>{% trans %}Description{% endtrans %}:</b> {{ room.description }} <br>
+		<b>{% trans %}Max users{% endtrans %}:</b> {{ room.maxUsers }}<br> <b>{%
+				trans %}Public{% endtrans %}: </b> {% if room.isPublic %} <input
+			type="checkbox" disabled="disabled" checked="checked"> {% else %} <input
+			type="checkbox" disabled="disabled"> {% endif %} <br>
+			<a id="modify_room"
+			href={{ path("default_modify_room",{'id': room.id}) }}>{% trans
+				%}Modify{% endtrans %}</a> <span>|</span> <a id="delete_room"
+			href={{ path("default_delete_room",{'id': room.id}) }}>{% trans
+				%}Delete{% endtrans %}</a> <br> <br></li> {% endfor %}
+	</ul>
+	{% endif %} {% endif %}
 </div>
 
 
