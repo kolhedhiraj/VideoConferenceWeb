@@ -3,6 +3,8 @@
 {% trans %}Profile{% endtrans %}
 {% endblock %}
 {% block content %}
+<div style="color: white; margin-left: 40px">
 {% include "FOSUserBundle:Profile:edit_content.html.twig" %}
 {% include "FOSUserBundle:ChangePassword:changePassword_content.html.twig" %}
+</div>
 {% endblock content %}
