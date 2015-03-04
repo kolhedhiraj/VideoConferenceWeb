@@ -34,8 +34,12 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
+    bundles:        [ VideoConferenceLogInBundle ]
     #java: /usr/bin/java
+    assets:
+        home_css:
+            inputs:
+                - '@VideoConferenceLogInBundle/Resources/public/css/video_conference.css'
     filters:
         cssrewrite: ~
         #closure:

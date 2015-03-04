@@ -1,0 +1,12 @@
+{% extends "VideoConferenceLogInBundle::layout.html.twig" %}
+{% block title %}
+    {% trans %}Delete room{% endtrans %}
+{% endblock %}
+{% block content %}
+
+    <h1>Are you sure?</h1>
+
+    {{ form_start(delete_form) }}
+    {{ form_widget(delete_form) }}
+    {{ form_end(delete_form) }}
+{% endblock %}

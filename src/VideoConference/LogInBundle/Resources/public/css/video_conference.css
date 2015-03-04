@@ -1,0 +1,59 @@
+body {
+    font-family: Roboto, sans-serif;
+}
+
+a:link {
+    font-style: bold;
+    color: white;
+    text-decoration: none;
+    font-size: 120%;
+}
+
+a:visited {
+    font-style: bold;
+    color: white;
+    text-decoration: none;
+    font-size: 120%;
+}
+
+a:hover {
+    color: #8C8C8C;
+    text-decoration: none;
+    font-style: bold;
+    font-size: 120%;
+}
+
+a:active {
+    font-style: bold;
+    color: white;
+    text-decoration: none;
+    font-size: 120%;
+}
+
+label {
+    margin-right: 10px
+}
+
+input[type="text"] {
+    margin-right: 10px
+}
+
+input[type="submit"] {
+    font-size: 80%;
+}
+
+button[type="submit"] {
+    font-size: 80%;
+}
+
+button[type="button"] {
+    font-size: 80%;
+}
+
+form {
+    line-height: 200%;
+}
+
+li {
+    color: white;
+}

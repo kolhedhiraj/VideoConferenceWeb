@@ -79,3 +79,10 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+/nbproject/private/
+
+/web/assetic/
+/web/assets/
+
+#do not store
+/app/config/paramters.yml
