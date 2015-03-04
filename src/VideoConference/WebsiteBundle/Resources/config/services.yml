@@ -1,6 +1,6 @@
 services:
   video_conference.locale_listener:
-    class: VideoConference\LogInBundle\EventListener\LocaleListener
+    class: VideoConference\WebsiteBundle\EventListener\LocaleListener
     arguments: ["%kernel.default_locale%"] #ezt olvassa fel a config.yml-ből
     tags:
       - { name: kernel.event_subscriber }

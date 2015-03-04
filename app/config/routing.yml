@@ -1,5 +1,5 @@
-video_conference_log_in:
-    resource: "@VideoConferenceLogInBundle/Resources/config/routing.yml"
+video_conference_website:
+    resource: "@VideoConferenceWebsiteBundle/Resources/config/routing.yml"
     prefix:   /  
     
 fos_user_security:

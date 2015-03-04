@@ -1,9 +1,9 @@
 <?php
 
-namespace VideoConference\LogInBundle\Entity;
+namespace VideoConference\WebsiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use VideoConference\LogInBundle\Entity\User;
+use VideoConference\WebsiteBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace VideoConference\LogInBundle\Controller;
+namespace VideoConference\WebsiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Routing;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use VideoConference\LogInBundle\Entity\Room;
+use VideoConference\WebsiteBundle\Entity\Room;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -18,10 +18,10 @@ class DefaultController extends Controller {
      */
     public function indexAction() {
         // kibányásztuk a repository class-t, ezzel tudunk lekérdezéseket csinálni
-        $userRepository = $this->getDoctrine()->getRepository('VideoConferenceLogInBundle:User');
-        $roomRepository = $this->getDoctrine()->getRepository('VideoConferenceLogInBundle:Room');
+        $userRepository = $this->getDoctrine()->getRepository('VideoConferenceWebsiteBundle:User');
+        $roomRepository = $this->getDoctrine()->getRepository('VideoConferenceWebsiteBundle:Room');
 
-        return $this->render('VideoConferenceLogInBundle:Default:index.html.twig', array(
+        return $this->render('VideoConferenceWebsiteBundle:Default:index.html.twig', array(
                     'users' => $userRepository->findAll(),
                     'rooms' => $roomRepository->findAll()
         ));
@@ -59,7 +59,7 @@ class DefaultController extends Controller {
             return $this->redirectToRoute('default_manage_rooms');
         }
 
-        return $this->render("VideoConferenceLogInBundle:Default:createRoom.html.twig", array(
+        return $this->render("VideoConferenceWebsiteBundle:Default:createRoom.html.twig", array(
                     'form' => $form->createView()
         ));
     }
@@ -70,11 +70,11 @@ class DefaultController extends Controller {
      */
     public function manageRoomsAction(Request $request) {
         if ($this->getUser()->getRooms()->count() != null) {
-            return $this->render("VideoConferenceLogInBundle:Default:manageRooms.html.twig", array(
+            return $this->render("VideoConferenceWebsiteBundle:Default:manageRooms.html.twig", array(
                         'rooms' => $this->getUser()->getRooms()
             ));
         } else {
-            return $this->render("VideoConferenceLogInBundle:Default:manageRooms.html.twig", array(
+            return $this->render("VideoConferenceWebsiteBundle:Default:manageRooms.html.twig", array(
                         'rooms' => null
             ));
         }
@@ -82,7 +82,7 @@ class DefaultController extends Controller {
 
     /**
      * @Route("/delete_room/{id}",name="default_delete_room")
-     * @ParamConverter("room", class="VideoConferenceLogInBundle:Room")
+     * @ParamConverter("room", class="VideoConferenceWebsiteBundle:Room")
      * @Security("has_role('ROLE_USER')")
      */
     public function deleteRoomAction(Request $request, Room $room) {
@@ -110,7 +110,7 @@ class DefaultController extends Controller {
             return $this->redirectToRoute('default_manage_rooms');
         }
 
-        return $this->render("VideoConferenceLogInBundle:Default:deleteRoom.html.twig", array(
+        return $this->render("VideoConferenceWebsiteBundle:Default:deleteRoom.html.twig", array(
                     'delete_form' => $deleteForm->createView()
         ));
     }
@@ -120,7 +120,7 @@ class DefaultController extends Controller {
      * @Security("has_role('ROLE_USER')")
      */
     public function modifyRoomAction(Request $request, $id) {
-        $room = $this->getDoctrine()->getRepository('VideoConferenceLogInBundle:Room')->find($id);
+        $room = $this->getDoctrine()->getRepository('VideoConferenceWebsiteBundle:Room')->find($id);
         $form = $this->createFormBuilder()->add('name', null, array('required' => false, 'data' => $room->getName()))
                         ->add('description', null, array('required' => false, 'data' => $room->getDescription()))
                         ->add('maxUsers', 'integer', array('required' => false, 'data' => $room->getMaxUsers()))
@@ -145,7 +145,7 @@ class DefaultController extends Controller {
             return $this->redirect($this->generateUrl('default_manage_rooms'));
         }
 
-        return $this->render("VideoConferenceLogInBundle:Default:modifyRoom.html.twig", array(
+        return $this->render("VideoConferenceWebsiteBundle:Default:modifyRoom.html.twig", array(
                     'form' => $form->createView()
         ));
     }

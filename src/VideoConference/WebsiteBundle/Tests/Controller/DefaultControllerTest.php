@@ -1,6 +1,6 @@
 <?php
 
-namespace VideoConference\LogInBundle\Tests\Controller;
+namespace VideoConference\WebsiteBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Validator\Constraints\UrlValidator;

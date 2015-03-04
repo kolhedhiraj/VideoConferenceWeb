@@ -34,12 +34,12 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ VideoConferenceLogInBundle ]
+    bundles:        [ VideoConferenceWebsiteBundle ]
     #java: /usr/bin/java
     assets:
         home_css:
             inputs:
-                - '@VideoConferenceLogInBundle/Resources/public/css/video_conference.css'
+                - '@VideoConferenceWebsiteBundle/Resources/public/css/video_conference.css'
     filters:
         cssrewrite: ~
         #closure:
@@ -79,7 +79,7 @@ swiftmailer:
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
-    user_class: VideoConference\LogInBundle\Entity\User
+    user_class: VideoConference\WebsiteBundle\Entity\User
     
 stof_doctrine_extensions:
     orm:

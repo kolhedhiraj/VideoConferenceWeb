@@ -1,8 +1,8 @@
 <?php
-namespace VideoConference\LogInBundle\DataFixtures\ORM;
+namespace VideoConference\WebsiteBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use VideoConference\LogInBundle\Entity\User;
+use VideoConference\WebsiteBundle\Entity\User;
 
 class LoadUserData implements FixtureInterface
 {

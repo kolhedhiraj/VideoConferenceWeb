@@ -1,4 +1,0 @@
-video_conference:
-    resource: "@VideoConferenceLogInBundle/Controller/DefaultController.php"
-    type: annotation
-    prefix: /
