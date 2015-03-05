@@ -37,9 +37,6 @@
                 <span style="margin-left: 30px">{% trans %}Logged in{% endtrans %}: </span><strong
                     style="font-style: italic;">{{app.user.username }} | </strong> <a
                     href={{ path("fos_user_security_logout") }}>{% trans %}Log Out{% endtrans %}</a>
-                <strong><span>|</span></strong>
-                <a href={{ path("fos_user_change_password")}} style="font-size: 80%;">{% trans %}Change password{%
-					endtrans %}</a>
             </p>
         {% endif %}
         <ul id="menu" style="line-height: 150%">
@@ -49,7 +46,7 @@
                 <li><a href={{ path("fos_user_registration_register") }}>{% trans
                         %}Register{% endtrans %}</a></li> {% endif %} {% if
 			is_granted('ROLE_USER') %} {% block create_room %} {% endblock %}
-                <li><a href={{ path("fos_user_profile_edit") }}>{% trans %}Profile{%
+                <li><a href={{ path("default_modify_user") }}>{% trans %}Profile{%
 					endtrans %}</a></li>
                 <li><a href={{ path("default_manage_rooms") }}>{% trans %}Rooms{%
 					endtrans %}</a></li> {% endif %}
