@@ -117,7 +117,9 @@ class DefaultController extends Controller {
 	 * @Security("has_role('ROLE_USER')")
 	 */
 	public function modifyRoomAction(Request $request, $id) {
+		
 		$room = $this->getDoctrine ()->getRepository ( 'VideoConferenceWebsiteBundle:Room' )->find ( $id );
+		
 		$form = $this->createFormBuilder ()->add ( 'name', null, array (
 				'required' => false,
 				'data' => $room->getName () 
@@ -147,9 +149,8 @@ class DefaultController extends Controller {
 			$em->flush ();
 			return $this->redirect ( $this->generateUrl ( 'default_manage_rooms' ) );
 		}
-		
 		return $this->render ( "VideoConferenceWebsiteBundle:Default:modifyRoom.html.twig", array (
-				'form' => $form->createView () 
+				'form' => $form->createView (),
 		) );
 	}
 	
@@ -201,11 +202,7 @@ class DefaultController extends Controller {
 					) );
 				}
 			
-				
-			
-			
-			$userManager->updateUser ( $user );
-			// return $this->redirect($this->generateUrl('fos_user_profile_show'));
+				$userManager->updateUser ( $user );
 			
 			return $this->render ( "VideoConferenceWebsiteBundle:Default:modifyUser.html.twig", array (
 					'form' => $form->createView (),
