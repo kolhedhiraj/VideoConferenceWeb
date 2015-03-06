@@ -11,7 +11,7 @@ title %} {% trans %}Rooms{% endtrans %} {% endblock %} {% block head %}
 	{% if is_granted('ROLE_USER') %} {% if rooms is null%} <span
 		style="color: white">{% trans %}There are no rooms{% endtrans %}</span>
 	{% else %}
-	<table style="color: white;border-spacing: 10px;width:700px;	">
+	<table style="color: white;border-spacing: 10px;width:800px;	">
 		<th style="text-align: left;">{% trans %}Name{% endtrans %}</th>
 		<th style="text-align: left;">{% trans %}Description{% endtrans %}</th>
 		<th>{% trans %}Max users{% endtrans %}</th>
@@ -24,10 +24,10 @@ title %} {% trans %}Rooms{% endtrans %} {% endblock %} {% block head %}
 			<td style="text-align: center;">{{ room.maxUsers }}</td>
 			<td style="text-align: center;">{% if room.isPublic %} <input type="checkbox" disabled="disabled"
 				checked="checked"> {% else %} <input type="checkbox"
-				disabled="disabled"> {% endif %}
+				disabled="disabled"> {% endif %}</td>
 			
-			<td>
-			
+			<td><a class="link_buttons">{% trans %}Join{% endtrans %}</a>
+			</td>
 			<td><a class="link_buttons"
 				href={{ path("default_modify_room",{'id': room.id}) }}>{% trans
 					%}Modify{% endtrans %}</a></td>
