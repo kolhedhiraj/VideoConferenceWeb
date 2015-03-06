@@ -1,11 +1,11 @@
 {% extends "VideoConferenceWebsiteBundle::layout.html.twig" %}
 {% block title %}
-    {% trans %}Modify user{% endtrans %}
+    {% trans %}Modify profile{% endtrans %}
 {% endblock %}
 {% block
 content %}
 <div style="color:white">
-{{ message }}
+<strong>{{ message |trans }}</strong>
 </div>
 <div style="color: white">
     {{ form_start(form) }}

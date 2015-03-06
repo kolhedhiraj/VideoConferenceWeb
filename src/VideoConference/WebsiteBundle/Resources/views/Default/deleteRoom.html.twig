@@ -4,9 +4,13 @@
 {% endblock %}
 {% block content %}
 
-    <div style="color:white;margin-bottom:10px;">{% trans %}Are you sure?{% endtrans %}</div>
+    <div style="color:white;text-align: center;margin-top: 40px">
+    <div style="margin-bottom: 8px"><strong>{% trans %}Are you sure?{% endtrans %}</strong></div>
 
     {{ form_start(delete_form) }}
-    {{ form_widget(delete_form) }}
+    {{ form_widget(delete_form.delete) }}
+    {{ form_widget(delete_form.cancel) }}
     {{ form_end(delete_form) }}
+    
+    </div>
 {% endblock %}
