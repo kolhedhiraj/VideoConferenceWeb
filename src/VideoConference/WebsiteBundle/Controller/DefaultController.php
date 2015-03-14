@@ -215,4 +215,16 @@ class DefaultController extends Controller {
 				'message' => '' 
 		) );
 	}
+	
+	/**
+	 * @Route("/join_room/{id}",name="default_join_room")
+	 * @Security("has_role('ROLE_USER')")
+	 */
+	public function videoStreamAction($id) {
+		$user = $this->container->get ( 'security.context' )->getToken ()->getUser ();
+		$room = $this->getDoctrine ()->getRepository ( 'VideoConferenceWebsiteBundle:Room' )->find ( $id );
+		return $this->render ( "VideoConferenceWebsiteBundle:Default:videoStream.html.twig", array (
+				'user' => $user,'room'=>$room,
+		) );
+	}
 }

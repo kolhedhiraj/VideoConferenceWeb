@@ -15,6 +15,7 @@ title %} {% trans %}Rooms{% endtrans %} {% endblock %} {% block head %}
 		<th style="text-align: left;">{% trans %}Name{% endtrans %}</th>
 		<th style="text-align: left;">{% trans %}Description{% endtrans %}</th>
 		<th>{% trans %}Max users{% endtrans %}</th>
+		<th>{% trans %}Created at{% endtrans %}</th>
 		<th>{% trans %}Public{% endtrans %}</th>
 		
 			{% for room in rooms %}
@@ -22,11 +23,14 @@ title %} {% trans %}Rooms{% endtrans %} {% endblock %} {% block head %}
 			<td style="text-align: left;width:25%;">{{ room.name }}</td>
 			<td style="text-align: left;width:25%">{{ room.description }}</td>
 			<td style="text-align: center;">{{ room.maxUsers }}</td>
+			<td style="text-align: center;">{% if app.request.locale=='en'%}{{ room.createdAt|date('m/d/Y H:i:s') }}
+			{% else%}{{ room.createdAt|date('Y/m/d H:i:s') }}{% endif %}</td>
 			<td style="text-align: center;">{% if room.isPublic %} <input type="checkbox" disabled="disabled"
 				checked="checked"> {% else %} <input type="checkbox"
 				disabled="disabled"> {% endif %}</td>
 			
-			<td><a class="link_buttons">{% trans %}Join{% endtrans %}</a>
+			<td><a class="link_buttons" href={{ path("default_join_room",{'id':
+				room.id}) }}>{% trans %}Join{% endtrans %}</a>
 			</td>
 			<td><a class="link_buttons"
 				href={{ path("default_modify_room",{'id': room.id}) }}>{% trans
