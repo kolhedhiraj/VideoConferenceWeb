@@ -6,4 +6,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class VideoConferenceWebsiteBundle extends Bundle
 {
+	public function getParent()
+	{
+		return 'FOSUserBundle';
+	}
 }

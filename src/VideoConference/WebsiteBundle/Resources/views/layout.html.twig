@@ -1,57 +1,60 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{%- block title %}{% endblock -%}</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/ui-darkness/jquery-ui.css" />
-
-        {% stylesheets "@home_css" output='assets/videoconferencewebsite/css/main.css' %}
-        <link type="text/css" href="{{ asset_url }}" rel="stylesheet" />
-        {% endstylesheets %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-        <script>
-            $(function () {
-                $("input[type=submit], button")
-                        .button();
-            });
-        </script>
-        <script>
-            $(function () {
-                $('.link_buttons')
-                        .button();
-                $('.link_buttons').css("font-size", "80%");
-            });
-        </script>
-    {% block head %}{% endblock %}
+<head>
+<meta charset="UTF-8" />
+<title>{%- block title %}{% endblock -%}</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{% stylesheets "@home_css"
+output='assets/videoconferencewebsite/css/main.css' %}
+<link type="text/css" href="{{ asset_url }}" rel="stylesheet" />
+{% endstylesheets %} {% block head %}{% endblock %}
 </head>
 
-<body bgcolor="#404040">
-    <div style="float: right; color: white; margin-right: 80px">
-        <a href={{ path("default_locale",{'_locale':'hu'})}}><img src={{ asset('Hungary-Flag-icon.png') }}></a>
-        <a href={{ path("default_locale",{'_locale':'en'})}}><img src={{ asset('United-Kingdom-flag-icon.png') }}></a>
-    </div>
-    <div style="color: white; margin-left: 40px; margin-top: 40px">
-        {% if is_granted('ROLE_USER') %}
-            <p>
-                <span style="margin-left: 30px">{% trans %}Logged in{% endtrans %}: </span><strong
-                    style="font-style: italic;">{{app.user.username }} | </strong> <a
-                    href={{ path("fos_user_security_logout") }}>{% trans %}Log Out{% endtrans %}</a>
-            </p>
-        {% endif %}
-        <ul id="menu" style="line-height: 150%">
-            {% if is_granted('ROLE_USER')==false %}
-                <li><a href={{ path("fos_user_security_login") }}>{% trans %}Log In{%
-					endtrans %}</a></li>
-                <li><a href={{ path("fos_user_registration_register") }}>{% trans
-                        %}Register{% endtrans %}</a></li> {% endif %} {% if
-			is_granted('ROLE_USER') %} {% block create_room %} {% endblock %}
-                <li><a href={{ path("default_modify_user") }}>{% trans %}Profile{%
-					endtrans %}</a></li>
-                <li><a href={{ path("default_manage_rooms") }}>{% trans %}Rooms{%
-					endtrans %}</a></li> {% endif %}
-            </ul>
-        </div>
-        <div style="margin-left: 60px">{% block content %} {% endblock %}</div>
-    </body>
+<body>
+	<header id="header">
+		<nav id="nav">
+			<ul>
+				{% if is_granted('ROLE_USER')==false %} 
+				<li><a href={{
+		path("fos_user_security_login") }}>{% trans %}Log In{% endtrans %}</a>
+				</li>
+
+				<li><a href={{ path("fos_user_registration_register")
+		}}>{% trans %}Register{% endtrans %}</a></li> {% endif %} {% if
+				is_granted('ROLE_USER') %} 
+				<li><a href={{ path("default_create_room") }}>{% trans %}Create room{%
+						endtrans %}</a></li>
+
+				<li><a href={{ path("default_modify_user") }}>{% trans %}Profile{%
+						endtrans %}</a></li>
+				<li><a href={{ path("default_manage_rooms") }}>{% trans %}Rooms{%
+						endtrans %}</a></li> {% endif %} {% if is_granted('ROLE_USER') %}
+				<li>{% trans %}Logged in{% endtrans %}: {{app.user.username }} | <a
+					href={{
+		path("fos_user_security_logout") }}>{% trans %}Log Out{% endtrans %}</a></li>
+				{% endif %}
+				<li>
+					<div>
+						<a href={{	path("default_locale",{'_locale':'hu'})}}>HU</a> 
+						<span>|</span>
+						<a href={{		path("default_locale",{'_locale':'en'})}}>EN</a>
+					</div>
+				</li>
+			</ul>
+
+		</nav>
+		{#<div style="margin-left: 4em;"> <a href={{
+		path("default_locale",{'_locale':'hu'})}}><img src={{
+		asset('Hungary-Flag-icon.png') }}></a> <a href={{
+		path("default_locale",{'_locale':'en'})}}><img src={{
+		asset('United-Kingdom-flag-icon.png') }}></a> </div> <div> {% if
+		is_granted('ROLE_USER') %} <span style="margin-left: 30px">{% trans
+		%}Logged in{% endtrans %}:{{app.user.username }} | <a href={{
+		path("fos_user_security_logout") }}>{% trans %}Log Out{% endtrans
+		%}</a> {% endif %} </div>#}
+	</header>
+	<div class="wrapper style1">{% block content %} {% endblock %}</div>
+
+</body>
 </html>

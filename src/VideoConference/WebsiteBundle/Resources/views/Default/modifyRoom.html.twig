@@ -4,9 +4,13 @@
 {% endblock %}
 {% block
 content %}
-<div style="color: white">
+<div>
     {{ form_start(form) }}
     {{ form_widget(form) }}
+    <div style="margin-top: 1em">
+		<input type="submit"
+			value="{% trans %}Modify room{% endtrans %}" />
+	</div>
     {{ form_end(form) }}
 </div>
 {% endblock %}

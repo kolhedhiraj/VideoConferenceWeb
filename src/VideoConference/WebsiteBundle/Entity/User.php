@@ -18,8 +18,8 @@ class User extends BaseUser {
 	public function __construct(){
 		parent::__construct();
 		$this->rooms = new ArrayCollection();
-		$this->firstName = "teszt";
-		$this->lastName="elek";
+		$this->firstName = "";
+		$this->lastName="";
 	}
 	/**
 	* @ORM\Id

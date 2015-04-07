@@ -1,46 +1,52 @@
 {% extends "VideoConferenceWebsiteBundle::layout.html.twig" %} {% block
 title %} {% trans %}Rooms{% endtrans %} {% endblock %} {% block head %}
+
 {% endblock %} {% block create_room %} {% if is_granted('ROLE_USER') %}
-<a class="link_buttons" href={{ path("default_create_room") }}>{% trans
-	%}Create room{% endtrans %}</a>
+<a href={{ path("default_create_room") }}>{% trans %}Create room{%
+	endtrans %}</a>
 <br>
 <br>
 {% endif %} {% endblock %} {% block content %}
 
 <div>
-	{% if is_granted('ROLE_USER') %} {% if rooms is null%} <span
-		style="color: white">{% trans %}There are no rooms{% endtrans %}</span>
+	{% if is_granted('ROLE_USER') %} {% if rooms is null%}
+	<div style="text-align: center;">
+		<label>{% trans %}There are no rooms{% endtrans %}</label> <a
+			href={{ path("default_create_room") }} class="button">{% trans %}Create room{%
+			endtrans %}</a>
+	</div>
 	{% else %}
-	<table style="color: white;border-spacing: 10px;width:800px;	">
-		<th style="text-align: left;">{% trans %}Name{% endtrans %}</th>
-		<th style="text-align: left;">{% trans %}Description{% endtrans %}</th>
+	<table>
+		<th>{% trans %}Name{% endtrans %}</th>
+		<th>{% trans %}Description{% endtrans %}</th>
 		<th>{% trans %}Max users{% endtrans %}</th>
 		<th>{% trans %}Created at{% endtrans %}</th>
 		<th>{% trans %}Public{% endtrans %}</th>
-		
-			{% for room in rooms %}
-			<tr>
-			<td style="text-align: left;width:25%;">{{ room.name }}</td>
-			<td style="text-align: left;width:25%">{{ room.description }}</td>
-			<td style="text-align: center;">{{ room.maxUsers }}</td>
-			<td style="text-align: center;">{% if app.request.locale=='en'%}{{ room.createdAt|date('m/d/Y H:i:s') }}
-			{% else%}{{ room.createdAt|date('Y/m/d H:i:s') }}{% endif %}</td>
-			<td style="text-align: center;">{% if room.isPublic %} <input type="checkbox" disabled="disabled"
+		<th></th>
+		<th></th>
+		<th></th> {% for room in rooms %}
+		<tr>
+			<td>{{ room.name }}</td>
+			<td>{{ room.description }}</td>
+			<td>{{ room.maxUsers }}</td>
+			<td>{% if app.request.locale=='en'%}{{ room.createdAt|date('m-d-Y /
+				H:i:s') }} {% else%}{{ room.createdAt|date('Y-m-d / H:i:s') }}{% endif
+				%}</td>
+			<td>{% if room.isPublic %} <input type="checkbox" disabled="disabled"
 				checked="checked"> {% else %} <input type="checkbox"
-				disabled="disabled"> {% endif %}</td>
-			
-			<td><a class="link_buttons" href={{ path("default_join_room",{'id':
-				room.id}) }}>{% trans %}Join{% endtrans %}</a>
+				disabled="disabled"> {% endif %}
 			</td>
-			<td><a class="link_buttons"
-				href={{ path("default_modify_room",{'id': room.id}) }}>{% trans
-					%}Modify{% endtrans %}</a></td>
-			<td><a class="link_buttons" href={{ path("default_delete_room",{'id':
-				room.id}) }}>{% trans %}Delete{% endtrans %}</a>
-			</td></tr> {% endfor %}
+
+			<td><a href={{ path("default_join_room",{'id':
+				room.id}) }}>{% trans %}Join{% endtrans %}</a></td>
+			<td><a href={{ path("default_modify_room",{'id': room.id}) }}>{%
+					trans %}Modify{% endtrans %}</a></td>
+			<td><a href={{ path("default_delete_room",{'id':
+				room.id}) }}>{% trans %}Delete{% endtrans %}</a></td>
+		</tr>
+		{% endfor %}
 	</table>
-	 {% endif %} {% endif
-	%}
+	{% endif %} {% endif %}
 </div>
 
 

@@ -44,15 +44,13 @@ class DefaultController extends Controller {
 		$room = new Room ();
 		$form = $this->createFormBuilder ( $room )->add ( 'name' )->add ( 'description' )->add ( 'maxUsers' )->add ( 'isPublic', null, array (
 				'required' => false 
-		) )->add ( 'save', 'submit', array (
-				'label' => 'Create room' 
 		) )->getForm ();
 		
 		$form->handleRequest ( $request );
 		
 		if ($form->isValid ()) {
 			$em = $this->getDoctrine ()->getManager ();
-			$room->setToken ( 'tralala' );
+			$room->setToken ('asd');
 			$room->setOwner ( $this->getUser () );
 			$em->persist ( $room );
 			$em->flush ();
@@ -92,7 +90,11 @@ class DefaultController extends Controller {
 		
 		$deleteForm = $this->createFormBuilder ( $formData )->setAction ( $this->generateUrl ( 'default_delete_room', array (
 				'id' => $room->getId () 
-		) ) )->setMethod ( 'DELETE' )->add ( 'room_id', 'hidden' )->add ( 'delete', 'submit' )->add ( 'cancel', 'submit' )->getForm ();
+		) ) )->setMethod ( 'DELETE' )->add ( 'room_id', 'hidden' )->add('delete', 'submit', array(
+    'attr' => array('class' => 'button'),
+))->add('cancel', 'submit', array(
+    'attr' => array('class' => 'button'),
+))->getForm ();
 		
 		$deleteForm->handleRequest ( $request );
 		
@@ -133,8 +135,6 @@ class DefaultController extends Controller {
 				'label' => 'Public',
 				'required' => false,
 				'data' => $room->getIsPublic () 
-		) )->add ( 'save', 'submit', array (
-				'label' => 'Modify room' 
 		) )->getForm ();
 		
 		$form->handleRequest ( $request );
@@ -179,8 +179,6 @@ class DefaultController extends Controller {
 				'data' => $user->getPlainPassword () 
 		) )->add ( 'verify_password', 'password', array (
 				'required' => false 
-		) )->add ( 'save', 'submit', array (
-				'label' => 'Update profile' 
 		) )->getForm ();
 		
 		$form->handleRequest ( $request );

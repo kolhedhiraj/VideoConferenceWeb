@@ -1,11 +1,32 @@
-{% extends "VideoConferenceWebsiteBundle::layout.html.twig" %}
-{% block title %}
-    {% trans %}Video Stream{% endtrans %}
-{% endblock %}
-{% block
-content %}
-<div style="color: white;text-align: center;">
-   <embed width="640" height="480" src="/web/VideoConferenceFlash.swf"
-		FlashVars="userNameLabel={% trans %}User{% endtrans %}&userName={{ user.getUsername() }}&roomNameLabel={% trans %}Room{% endtrans %}&roomName={{ room.getName() }}">
-</div>
+{% extends "VideoConferenceWebsiteBundle::layout.html.twig" %} {% block
+title %} {% trans %}Video Stream{% endtrans %} {% endblock %} {% block
+head %}
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+<script type="text/javascript">7
+var flashvars1 = {notifyJS:"false"};
+var flashvars2={notifyJS:"true"};
+var params = {};
+var attributes = {};
+swfobject.embedSWF("/web/VideoConferenceFlash.swf", "publishStream", "640", "480", "9.0.0",false, flashvars1, params, attributes);
+swfobject.embedSWF("/web/VideoConferenceFlash.swf", "playStream", "640", "480", "9.0.0",false, flashvars2, params, attributes);
+
+function flashReady() {
+	var userId="{{ user.getId() }}";
+	var userName="{{ user.getUsername() }}";
+	var roomId="{{ room.getId() }}";
+	   document.getElementById("publishStream").publishWebcam('rtmp://localhost/Red5VideoConference', 'myHandle', userId,userName,roomId);
+	   //document.getElementById("playStream").playStream('rtmp://localhost/Red5VideoConference', 'myHandle', userId,userName);
+	}
+</script>
+{% endblock %} {% block content %}
+<table>
+	<tr>
+		<td><div id="publishStream" style="margin: 0 auto;"></div></td>
+		<td><div id="playStream" style="margin: 0 auto;"></div></td>
+	</tr>
+</table>
+
+
+
 {% endblock %}

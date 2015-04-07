@@ -1,7 +1,8 @@
 {% extends "VideoConferenceWebsiteBundle::layout.html.twig" %} 
 {% block content %}
-<div id="content" style="color: white; margin: 20px; padding: 20px;">
+<div>
 
+	{# Ez nem kell, mert ami linkeket itt definiál, azok már megvannak 
 	<div>
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} {{
 		'layout.logged_in_as'|trans({'%username%': app.user.username},
@@ -10,7 +11,7 @@
 		<a href="/">Home</a>{% else %} <a
 			href="{{ path('fos_user_security_login') }}">{{
 			'layout.login'|trans({}, 'FOSUserBundle') }}</a> {% endif %}
-	</div>
+	</div> #}  
 
 	{% for type, messages in app.session.flashBag.all %} {% for message in
 	messages %}

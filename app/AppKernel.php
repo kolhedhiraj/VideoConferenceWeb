@@ -14,7 +14,7 @@ class AppKernel extends Kernel {
 				new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle (),
 				new VideoConference\WebsiteBundle\VideoConferenceWebsiteBundle (),
 				new FOS\UserBundle\FOSUserBundle (),
-				new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle()
+				new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 		)
 		;
 		

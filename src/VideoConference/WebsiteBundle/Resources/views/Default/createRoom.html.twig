@@ -5,7 +5,11 @@
  {% block
 content %}
 
-<div style="color: white";>{% if is_granted('ROLE_USER') %} <form method="POST">
+<div>{% if is_granted('ROLE_USER') %} <form method="POST">
 {{ form_start(form) }} {{
-	form_widget(form) }} {{ form_end(form) }}</form> {% endif %}</div>
+	form_widget(form) }} 
+	<div style="margin-top: 1em">
+		<input type="submit" value="{% trans %}Create room{% endtrans %}" />
+	</div>
+	{{ form_end(form) }}</form> {% endif %}</div>
 {% endblock %}

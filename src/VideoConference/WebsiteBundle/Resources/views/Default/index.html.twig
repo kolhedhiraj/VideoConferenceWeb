@@ -1,6 +1,6 @@
 {% extends "VideoConferenceWebsiteBundle::layout.html.twig" %} {% block
 create_room %} {% if is_granted('ROLE_USER') %}
-<a class="link_buttons" href={{ path("default_create_room") }}>{% trans
+<a href={{ path("default_create_room") }}>{% trans
 	%}Create room{% endtrans %}</a>
 <br>
 <br>

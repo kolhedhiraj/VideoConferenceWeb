@@ -1,16 +1,11 @@
-{% extends "VideoConferenceWebsiteBundle::layout.html.twig" %}
-{% block title %}
-    {% trans %}Delete room{% endtrans %}
-{% endblock %}
-{% block content %}
+{% extends "VideoConferenceWebsiteBundle::layout.html.twig" %} {% block
+title %} {% trans %}Delete room{% endtrans %} {% endblock %} {% block
+content %}
 
-    <div style="color:white;text-align: center;margin-top: 40px">
-    <div style="margin-bottom: 8px"><strong>{% trans %}Are you sure?{% endtrans %}</strong></div>
+	{{ form_start(delete_form) }}
+	<label style="margin-left: 1.5em;">{% trans %}Are you sure?{% endtrans %}</label>
+	 {{ form_widget(delete_form.delete) }}
+	  {{form_widget(delete_form.cancel) }}
+	   {{ form_end(delete_form) }}
 
-    {{ form_start(delete_form) }}
-    {{ form_widget(delete_form.delete) }}
-    {{ form_widget(delete_form.cancel) }}
-    {{ form_end(delete_form) }}
-    
-    </div>
 {% endblock %}
