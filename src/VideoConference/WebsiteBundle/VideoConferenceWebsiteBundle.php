@@ -8,6 +8,5 @@ class VideoConferenceWebsiteBundle extends Bundle
 {
 	public function getParent()
 	{
-		return 'FOSUserBundle';
 	}
 }
