@@ -15,6 +15,10 @@ class AppKernel extends Kernel {
 				new VideoConference\WebsiteBundle\VideoConferenceWebsiteBundle (),
 				new FOS\UserBundle\FOSUserBundle (),
 				new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+				new JMS\AopBundle\JMSAopBundle(),
+				new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+				new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+				new Bmatzner\FontAwesomeBundle\BmatznerFontAwesomeBundle(),
 		)
 		;
 		

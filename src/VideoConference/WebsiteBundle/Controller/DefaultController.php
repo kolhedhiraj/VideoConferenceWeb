@@ -41,16 +41,22 @@ class DefaultController extends Controller {
 	 * @Security("has_role('ROLE_USER')")
 	 */
 	public function createRoomAction(Request $request) {
+		$generator = $this->container->get('security.secure_random');
+		$bytes = $generator->nextBytes(16);		
+		
 		$room = new Room ();
-		$form = $this->createFormBuilder ( $room )->add ( 'name' )->add ( 'description' )->add ( 'maxUsers' )->add ( 'isPublic', null, array (
-				'required' => false 
+		$form = $this->createFormBuilder ( $room )->add ( 'name' )->add ( 'description' )->add ( 'maxUsers' )->add ( 'isPublic', 'checkbox', array (
+				'required' => false,
 		) )->getForm ();
+		//////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		
 		$form->handleRequest ( $request );
 		
 		if ($form->isValid ()) {
 			$em = $this->getDoctrine ()->getManager ();
-			$room->setToken ('asd');
+			$room->setToken (bin2hex($bytes));
+			
 			$room->setOwner ( $this->getUser () );
 			$em->persist ( $room );
 			$em->flush ();
@@ -134,7 +140,7 @@ class DefaultController extends Controller {
 		) )->add ( 'isPublic', 'checkbox', array (
 				'label' => 'Public',
 				'required' => false,
-				'data' => $room->getIsPublic () 
+				'data' => $room->getIsPublic (),'attr' => array('class' => 'input[type="checkbox"]'),
 		) )->getForm ();
 		
 		$form->handleRequest ( $request );

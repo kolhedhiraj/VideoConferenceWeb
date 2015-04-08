@@ -8,6 +8,7 @@
 {% stylesheets "@home_css"
 output='assets/videoconferencewebsite/css/main.css' %}
 <link type="text/css" href="{{ asset_url }}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerfontawesome/css/font-awesome.min.css') }}" />
 {% endstylesheets %} {% block head %}{% endblock %}
 </head>
 
@@ -55,6 +56,11 @@ output='assets/videoconferencewebsite/css/main.css' %}
 		%}</a> {% endif %} </div>#}
 	</header>
 	<div class="wrapper style1">{% block content %} {% endblock %}</div>
-
+<footer id="footer">
+<div style="margin-left: 3em">
+<i class="fa fa-copyright" style="color:white;"></i>
+<a href="http://flickr.com/szrphoto">Robert Szabados</a>
+</div>
+</footer>
 </body>
 </html>

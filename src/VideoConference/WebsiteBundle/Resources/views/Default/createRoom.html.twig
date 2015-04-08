@@ -5,11 +5,15 @@
  {% block
 content %}
 
-<div>{% if is_granted('ROLE_USER') %} <form method="POST">
-{{ form_start(form) }} {{
-	form_widget(form) }} 
+<div>{% if is_granted('ROLE_USER') %} 
+{{ form_start(form) }}
+{{ form_row(form.name) }}
+{{ form_row(form.description) }}
+{{ form_row(form.maxUsers) }}
+{{ form_widget(form.isPublic) }}<label for="form_isPublic">{% trans %}Public{% endtrans %}?</label>
 	<div style="margin-top: 1em">
 		<input type="submit" value="{% trans %}Create room{% endtrans %}" />
 	</div>
-	{{ form_end(form) }}</form> {% endif %}</div>
+	{{ form_end(form) }}
+	 {% endif %}</div>
 {% endblock %}

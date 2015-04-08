@@ -40,6 +40,7 @@ assetic:
         home_css:
             inputs:
                 - '@VideoConferenceWebsiteBundle/Resources/public/css/video_conference.css'
+     
     filters:
         cssrewrite: ~
         #closure:
@@ -85,5 +86,11 @@ stof_doctrine_extensions:
     orm:
         default:
             timestampable: true
+            
+jms_security_extra:
+    util:
+        secure_random: ~
+        
+
 
             

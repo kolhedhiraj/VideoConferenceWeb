@@ -32,9 +32,8 @@ title %} {% trans %}Rooms{% endtrans %} {% endblock %} {% block head %}
 			<td>{% if app.request.locale=='en'%}{{ room.createdAt|date('m-d-Y /
 				H:i:s') }} {% else%}{{ room.createdAt|date('Y-m-d / H:i:s') }}{% endif
 				%}</td>
-			<td>{% if room.isPublic %} <input type="checkbox" disabled="disabled"
-				checked="checked"> {% else %} <input type="checkbox"
-				disabled="disabled"> {% endif %}
+			<td>{% if room.isPublic %} <span>{% trans %}Yes{% endtrans %}<span> {% else %}
+			  <span>{% trans %}No{% endtrans %}<span> {% endif %}
 			</td>
 
 			<td><a href={{ path("default_join_room",{'id':

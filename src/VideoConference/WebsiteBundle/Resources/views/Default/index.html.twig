@@ -1,10 +1,8 @@
-{% extends "VideoConferenceWebsiteBundle::layout.html.twig" %} {% block
-create_room %} {% if is_granted('ROLE_USER') %}
-<a href={{ path("default_create_room") }}>{% trans
-	%}Create room{% endtrans %}</a>
-<br>
-<br>
-{% endif %} {% endblock %} {% block content %}
-
-
+{% extends "VideoConferenceWebsiteBundle::layout.html.twig" %}
+{% block content %}
+<input type="checkbox" id="checkbox1">
+<label for="checkbox1">
+::before
+"Tralala"
+</label>
 {% endblock %}

@@ -6,7 +6,10 @@
 content %}
 <div>
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_row(form.name) }}
+{{ form_row(form.description) }}
+{{ form_row(form.maxUsers) }}
+{{ form_widget(form.isPublic) }}<label for="form_isPublic">{% trans %}Public{% endtrans %}?</label>
     <div style="margin-top: 1em">
 		<input type="submit"
 			value="{% trans %}Modify room{% endtrans %}" />

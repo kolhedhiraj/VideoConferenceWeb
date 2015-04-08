@@ -357,7 +357,6 @@ input[type="radio"]+label:before {
 	border-radius: 100%;
 }
 
-
 ::-webkit-input-placeholder {
 	color: #858585 !important;
 	opacity: 1.0;
