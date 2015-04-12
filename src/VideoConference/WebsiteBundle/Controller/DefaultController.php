@@ -75,32 +75,25 @@ class DefaultController extends Controller {
 	 * @Security("has_role('ROLE_USER')")
 	 */
 	public function manageRoomsAction(Request $request) {
+		$currentUser=$this->container->get ( 'security.context' )->getToken ()->getUser ();
 		if ($this->getUser ()->getRooms ()->count () != null) {
-			/*
-			 * $rooms=$this->getUser()->getRooms()->toArray();
-			 * foreach ($rooms as $room){
-			 * $joinedUsers = new ArrayCollection();
-			 * if($room->getJoinedUsers()!=null){
-			 * $joinedUsers=$room->getJoinedUsers();
-			 * }
-			 */
+			 
 			
 			$users = $this->getDoctrine ()->getRepository ( 'VideoConferenceWebsiteBundle:User' )->findAll ();
-			$roomsOfUsers = new ArrayCollection ();
+			$publicRooms = new ArrayCollection ();
 			
 			foreach ( $users as $user ) {
 				$rooms = $user->getRooms ();
 				foreach ( $rooms as $room ) {
-					if ($room->getIsPublic ()) {
-						$roomsOfUsers->add ( $room );
+					if ($room->getIsPublic ()&&($room->getOwner()!==$currentUser)) {
+						$publicRooms->add ( $room );
 					}
 				}
 			}
 			
 			return $this->render ( "VideoConferenceWebsiteBundle:Default:manageRooms.html.twig", array (
 					'rooms' => $this->getUser ()->getRooms (),
-					'joinedUsers' => null,
-					'publicRooms' => $roomsOfUsers 
+					'publicRooms' => $publicRooms, 
 			) );
 		} else {
 			return $this->render ( "VideoConferenceWebsiteBundle:Default:manageRooms.html.twig", array (
