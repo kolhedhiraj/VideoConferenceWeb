@@ -16,12 +16,14 @@ title %} {% trans %}Rooms{% endtrans %} {% endblock %} {% block head %}
 			endtrans %}</a>
 	</div>
 	{% else %}
+	<label>{% trans %}Own rooms{% endtrans %}</label>
 	<table>
 		<th>{% trans %}Name{% endtrans %}</th>
 		<th>{% trans %}Description{% endtrans %}</th>
 		<th>{% trans %}Max users{% endtrans %}</th>
 		<th>{% trans %}Created at{% endtrans %}</th>
 		<th>{% trans %}Public{% endtrans %}</th>
+		<th>{% trans %}Joined users{% endtrans %}</th>
 		<th></th>
 		<th></th>
 		<th></th> {% for room in rooms %}
@@ -35,6 +37,7 @@ title %} {% trans %}Rooms{% endtrans %} {% endblock %} {% block head %}
 			<td>{% if room.isPublic %} <span>{% trans %}Yes{% endtrans %}<span> {% else %}
 			  <span>{% trans %}No{% endtrans %}<span> {% endif %}
 			</td>
+			<td>{% for joinedUser in joinedUsers %}{{ joinedUser.getUsername() }} {% endfor %}</td>
 
 			<td><a href={{ path("default_join_room",{'id':
 				room.id}) }}>{% trans %}Join{% endtrans %}</a></td>
@@ -46,6 +49,42 @@ title %} {% trans %}Rooms{% endtrans %} {% endblock %} {% block head %}
 		{% endfor %}
 	</table>
 	{% endif %} {% endif %}
+</div>
+<div>
+<label>{% trans %}Public{% endtrans %}</label>
+<table>
+		<th>{% trans %}Name{% endtrans %}</th>
+		<th>{% trans %}Description{% endtrans %}</th>
+		<th>Owner</td>
+		<th>{% trans %}Max users{% endtrans %}</th>
+		<th>{% trans %}Created at{% endtrans %}</th>
+		<th>{% trans %}Public{% endtrans %}</th>
+		<th>{% trans %}Joined users{% endtrans %}</th>
+		<th></th>
+		<th></th>
+		<th></th> {% for publicRoom in publicRooms %}
+		<tr>
+			<td>{{ publicRoom.name }}</td>
+			<td>{{ publicRoom.description }}</td>
+			<td>{{ publicRoom.getOwner }}</td>
+			<td>{{ publicRoom.maxUsers }}</td>
+			<td>{% if app.request.locale=='en'%}{{ publicRoom.createdAt|date('m-d-Y /
+				H:i:s') }} {% else%}{{ publicRoom.createdAt|date('Y-m-d / H:i:s') }}{% endif
+				%}</td>
+			<td>{% if publicRoom.isPublic %} <span>{% trans %}Yes{% endtrans %}<span> {% else %}
+			  <span>{% trans %}No{% endtrans %}<span> {% endif %}
+			</td>
+			<td>{% for joinedUser in joinedUsers %}{{ joinedUser.getUsername() }} {% endfor %}</td>
+
+			<td><a href={{ path("default_join_room",{'id':
+				publicRoom.id}) }}>{% trans %}Join{% endtrans %}</a></td>
+			<td><a href={{ path("default_modify_room",{'id': publicRoom.id}) }}>{%
+					trans %}Modify{% endtrans %}</a></td>
+			<td><a href={{ path("default_delete_room",{'id':
+				publicRoom.id}) }}>{% trans %}Delete{% endtrans %}</a></td>
+		</tr>
+		{% endfor %}
+	</table>
 </div>
 
 

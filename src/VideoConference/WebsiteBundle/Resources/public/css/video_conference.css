@@ -1001,7 +1001,7 @@ body.landing #header nav a {
 
 /* Wrapper */
 .wrapper {
-	padding: 2em 0em 4em;
+	padding: 1em 0em 1em;
 	/* Style 1 Wrapper */
 	/* Style 2 Wrapper */
 	/* Style 3 Wrapper */
@@ -1076,7 +1076,7 @@ body.landing #header nav a {
 /* Footer */
 #footer {
 	background: #383b43;
-	padding: 6em 0em 4em;
+	padding: 2em 0em 2em;
 }
 
 #footer h2, #footer h3, #footer h4 {
@@ -1126,4 +1126,9 @@ body.landing #header nav a {
 	line-height: 4em;
 	width: 4em;
 	cursor: pointer;
+}
+
+/*Ikonos cucchoz*/
+.cucc{
+text-decoration: none;
 }

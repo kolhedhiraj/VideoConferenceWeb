@@ -5,11 +5,13 @@
 <title>{%- block title %}{% endblock -%}</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	
 {% stylesheets "@home_css"
 output='assets/videoconferencewebsite/css/main.css' %}
 <link type="text/css" href="{{ asset_url }}" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerfontawesome/css/font-awesome.min.css') }}" />
 {% endstylesheets %} {% block head %}{% endblock %}
+
 </head>
 
 <body>
@@ -43,23 +45,13 @@ output='assets/videoconferencewebsite/css/main.css' %}
 					</div>
 				</li>
 			</ul>
-
 		</nav>
-		{#<div style="margin-left: 4em;"> <a href={{
-		path("default_locale",{'_locale':'hu'})}}><img src={{
-		asset('Hungary-Flag-icon.png') }}></a> <a href={{
-		path("default_locale",{'_locale':'en'})}}><img src={{
-		asset('United-Kingdom-flag-icon.png') }}></a> </div> <div> {% if
-		is_granted('ROLE_USER') %} <span style="margin-left: 30px">{% trans
-		%}Logged in{% endtrans %}:{{app.user.username }} | <a href={{
-		path("fos_user_security_logout") }}>{% trans %}Log Out{% endtrans
-		%}</a> {% endif %} </div>#}
 	</header>
 	<div class="wrapper style1">{% block content %} {% endblock %}</div>
 <footer id="footer">
 <div style="margin-left: 3em">
 <i class="fa fa-copyright" style="color:white;"></i>
-<a href="http://flickr.com/szrphoto">Robert Szabados</a>
+<a href="http://flickr.com/szrphoto" target="_blank">Robert Szabados</a>
 </div>
 </footer>
 </body>

@@ -6,6 +6,7 @@ use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -40,6 +41,10 @@ class User extends BaseUser {
 	 * 
 	 */
 	protected $rooms;
+	/**
+	 * @ManyToMany(targetEntity="Room", mappedBy="joinedUsers")
+	 **/
+	protected $roomsJoined;
 	
 	public function getFirstName() {
 		return $this->firstName;
@@ -60,6 +65,13 @@ class User extends BaseUser {
 	}
 	public function setRooms($rooms) {
 		$this->rooms = $rooms;
+		return $this;
+	}
+	public function getRoomsJoined() {
+		return $this->roomsJoined;
+	}
+	public function setRoomsJoined($roomsJoined) {
+		$this->roomsJoined = $roomsJoined;
 		return $this;
 	}
 	

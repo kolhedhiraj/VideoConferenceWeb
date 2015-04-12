@@ -4,8 +4,9 @@ namespace VideoConference\WebsiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use VideoConference\WebsiteBundle\Entity\User;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\JoinTable;
 use Gedmo\Mapping\Annotation as Gedmo;
-
 
 /**
  * Szoba a videokonferenciához
@@ -13,12 +14,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="room")
  * @ORM\Entity()
  */
-class Room{
+class Room {
 	/**
-	* @ORM\Id
-	* @ORM\Column(type="integer")
-	* @ORM\GeneratedValue(strategy="AUTO")
-	*/
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
 	protected $id;
 	/**
 	 * @ORM\Column(type="string",length=255,name="token")
@@ -35,7 +36,7 @@ class Room{
 	/**
 	 * Hivatkozunk a felhasználóra (Users)
 	 * @ORM\JoinColumn(name="owner_id",nullable=false,referencedColumnName="id")
-	 * @ORM\ManyToOne(targetEntity="User") 
+	 * @ORM\ManyToOne(targetEntity="User")
 	 */
 	protected $owner;
 	
@@ -53,6 +54,11 @@ class Room{
 	 * @ORM\Column(type="boolean",name="is_public")
 	 */
 	protected $isPublic;
+	/**
+	 * @ManyToMany(targetEntity="User", inversedBy="roomsJoined")
+	 * @JoinTable(name="joined_users")
+	 */
+	protected $joinedUsers;
 	
 	public function getId() {
 		return $this->id;
@@ -106,6 +112,12 @@ class Room{
 		$this->isPublic = $isPublic;
 		return $this;
 	}
+	public function getJoinedUsers() {
+		return $this->joinedUsers;
+	}
+	public function setJoinedUsers($joinedUsers) {
+		$this->joinedUsers = $joinedUsers;
+		return $this;
+	}
 	
-		
 }

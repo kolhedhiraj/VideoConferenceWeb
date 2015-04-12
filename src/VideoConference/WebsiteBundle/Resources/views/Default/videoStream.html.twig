@@ -15,8 +15,9 @@ function flashReady() {
 	var userId="{{ user.getId() }}";
 	var userName="{{ user.getUsername() }}";
 	var roomId="{{ room.getId() }}";
-	   document.getElementById("publishStream").publishWebcam('rtmp://localhost/Red5VideoConference', 'myHandle', userId,userName,roomId);
-	   //document.getElementById("playStream").playStream('rtmp://localhost/Red5VideoConference', 'myHandle', userId,userName);
+	var roomToken="{{ room.getToken() }}";
+	   document.getElementById("publishStream").publishWebcam('rtmp://localhost/VideoConferenceStreaming/'+roomId, userId, userId,userName,roomId,roomToken);
+	   document.getElementById("playStream").playStream('rtmp://localhost/VideoConferenceStreaming/'+roomId, userId, userId,userName,roomToken);
 	}
 </script>
 {% endblock %} {% block content %}
