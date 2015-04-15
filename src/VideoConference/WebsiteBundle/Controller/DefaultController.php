@@ -309,7 +309,7 @@ class DefaultController extends Controller {
 				$em->remove ( $user );
 				$em->flush ();
 			}
-				
+			$this->container->get('session')->invalidate(1);
 			return $this->redirectToRoute ( 'fos_user_security_logout' );
 		}
 	
