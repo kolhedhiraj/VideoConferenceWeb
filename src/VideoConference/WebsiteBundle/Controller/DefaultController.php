@@ -255,7 +255,11 @@ class DefaultController extends Controller {
 		
 		$joinedUsers = new ArrayCollection ();
 		$joinedUsers = $room->getJoinedUsers ();
+		
+		if(!$joinedUsers->contains($user)){		
 		$joinedUsers->add ( $user );
+		}
+		
 		$room->setJoinedUsers ( $joinedUsers );
 		$em->persist ( $room );
 		$em->flush ();
@@ -263,6 +267,50 @@ class DefaultController extends Controller {
 		return $this->render ( "VideoConferenceWebsiteBundle:Default:videoStream.html.twig", array (
 				'user' => $user,
 				'room' => $room 
+		) );
+	}
+	
+
+	
+	/**
+	 * @Route("/delete_user/{id}",name="default_delete_user")
+	 * @ParamConverter("user", class="VideoConferenceWebsiteBundle:User")
+	 * @Security("has_role('ROLE_USER')")
+	 */
+	public function deleteUserAction(Request $request, User $user) {
+		$currentUser = $this->container->get ( 'security.context' )->getToken ()->getUser ();
+		//$userById = $this->getDoctrine ()->getRepository ( 'VideoConferenceWebsiteBundle:User' )->find ( $id );
+		$formData = array (
+				'user_id' => $user->getId ()
+		);
+	
+		$deleteForm = $this->createFormBuilder ( $formData )->setAction ( $this->generateUrl ( 'default_delete_user', array (
+				'id' => $user->getId ()
+		) ) )->setMethod ( 'DELETE' )->add ( 'user_id', 'hidden' )->add ( 'delete', 'submit', array (
+				'attr' => array (
+						'class' => 'button'
+				)
+		) )->add ( 'cancel', 'submit', array (
+				'attr' => array (
+						'class' => 'button'
+				)
+		) )->getForm ();
+	
+		$deleteForm->handleRequest ( $request );
+	
+		// Ha valid a form és a szoba az adott userhez tartozik, akkor törli
+		if ($deleteForm->isValid () && $user->getId() == $currentUser->getId()) {
+			if ($deleteForm->get ( 'delete' )->isClicked ()) {
+				$em = $this->getDoctrine ()->getManager ();
+				$em->remove ( $user );
+				$em->flush ();
+			}
+				
+			return $this->redirectToRoute ( 'fos_user_security_login' );
+		}
+	
+		return $this->render ( "VideoConferenceWebsiteBundle:Default:deleteUser.html.twig", array (
+				'delete_form' => $deleteForm->createView ()
 		) );
 	}
 }

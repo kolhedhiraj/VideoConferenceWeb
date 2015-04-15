@@ -10,6 +10,7 @@ content %}
 	{{ form_widget(form) }}
 	<div style="margin-top: 1em">
 		<input type="submit" value="{% trans %}Update profile{% endtrans %}" />
+		<a class="button" href={{ path("default_delete_user") }}></a>
 	</div>
 	{{ form_end(form) }}
 </div>
