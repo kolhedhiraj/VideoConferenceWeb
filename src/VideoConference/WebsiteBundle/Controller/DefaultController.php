@@ -272,14 +272,15 @@ class DefaultController extends Controller {
 	
 
 	
+	
 	/**
-	 * @Route("/delete_user/{id}",name="default_delete_user")
-	 * @ParamConverter("user", class="VideoConferenceWebsiteBundle:User")
+	 * @Route("/delete_user",name="default_delete_user")
 	 * @Security("has_role('ROLE_USER')")
 	 */
-	public function deleteUserAction(Request $request, User $user) {
-		$currentUser = $this->container->get ( 'security.context' )->getToken ()->getUser ();
-		//$userById = $this->getDoctrine ()->getRepository ( 'VideoConferenceWebsiteBundle:User' )->find ( $id );
+	public function deleteUserAction(Request $request) {
+		
+		$user = $this->container->get ( 'security.context' )->getToken ()->getUser ();
+		
 		$formData = array (
 				'user_id' => $user->getId ()
 		);
@@ -299,14 +300,17 @@ class DefaultController extends Controller {
 		$deleteForm->handleRequest ( $request );
 	
 		// Ha valid a form és a szoba az adott userhez tartozik, akkor törli
-		if ($deleteForm->isValid () && $user->getId() == $currentUser->getId()) {
+		if ($deleteForm->isValid ()&&$user!=null) {
 			if ($deleteForm->get ( 'delete' )->isClicked ()) {
 				$em = $this->getDoctrine ()->getManager ();
+				foreach ( $user->getRooms() as $room ) {
+					$em->remove($room);
+				}
 				$em->remove ( $user );
 				$em->flush ();
 			}
 				
-			return $this->redirectToRoute ( 'fos_user_security_login' );
+			return $this->redirectToRoute ( 'fos_user_security_logout' );
 		}
 	
 		return $this->render ( "VideoConferenceWebsiteBundle:Default:deleteUser.html.twig", array (

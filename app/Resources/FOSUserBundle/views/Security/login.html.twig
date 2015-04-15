@@ -1,6 +1,6 @@
 {% extends "FOSUserBundle::layout.html.twig" %} {% block title %} {{
 "Login" }} {% endblock %} {% block fos_user_content %} {% if error %}
-<div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+<div><strong style="margin-left: 4em;">{{ error|trans({}, 'FOSUserBundle') }}</strong></div>
 {% endif %}
 
 <form action="{{ path("fos_user_security_check") }}" method="post">

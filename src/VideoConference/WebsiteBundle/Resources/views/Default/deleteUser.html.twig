@@ -1,11 +1,11 @@
 {% extends "VideoConferenceWebsiteBundle::layout.html.twig" %} {% block
 title %} {% trans %}Delete user{% endtrans %} {% endblock %} {% block
 content %}
-
+<div style="text-align: center;">
 	{{ form_start(delete_form) }}
-	<label style="margin-left: 1.5em;">{% trans %}Are you sure?{% endtrans %}</label>
+	<label>{% trans %}Are you sure?{% endtrans %}</label>
 	 {{ form_widget(delete_form.delete) }}
 	  {{form_widget(delete_form.cancel) }}
 	   {{ form_end(delete_form) }}
-
+</div>
 {% endblock %}
