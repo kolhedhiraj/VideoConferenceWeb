@@ -12,13 +12,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * The default controller for the video conference website
+ *
+ * @author Robert Szabados
+ *        
+ *        
+ */
 class DefaultController extends Controller {
 	
 	/**
 	 * @Route("/",name="default_index")
 	 */
 	public function indexAction() {
-		// kibányásztuk a repository class-t, ezzel tudunk lekérdezéseket csinálni
 		$userRepository = $this->getDoctrine ()->getRepository ( 'VideoConferenceWebsiteBundle:User' );
 		$roomRepository = $this->getDoctrine ()->getRepository ( 'VideoConferenceWebsiteBundle:Room' );
 		
@@ -28,8 +34,9 @@ class DefaultController extends Controller {
 		) );
 	}
 	
-	// Itt a _locale-t kapjuk meg paraméternek majd, pl hu vagy en
 	/**
+	 * Generates the index page according to the locale
+	 *
 	 * @Route("/{_locale}",name="default_locale",requirements={
 	 * "_locale": "en|hu"})
 	 */
@@ -38,6 +45,8 @@ class DefaultController extends Controller {
 	}
 	
 	/**
+	 * Generates a form and creates a room instance from the form values
+	 *
 	 * @Route("/create_room",name="default_create_room")
 	 * @Security("has_role('ROLE_USER')")
 	 */
@@ -49,8 +58,6 @@ class DefaultController extends Controller {
 		$form = $this->createFormBuilder ( $room )->add ( 'name' )->add ( 'description' )->add ( 'maxUsers' )->add ( 'isPublic', 'checkbox', array (
 				'required' => false 
 		) )->getForm ();
-		// ////////////////////////////////////////////////////////////////////////////
-		// ////////////////////////////////////////////////////////////////////////////
 		
 		$form->handleRequest ( $request );
 		
@@ -71,38 +78,52 @@ class DefaultController extends Controller {
 	}
 	
 	/**
+	 * Gets the current user's rooms, and the other users' public rooms.
+	 *
 	 * @Route("/manage_rooms",name="default_manage_rooms")
 	 * @Security("has_role('ROLE_USER')")
 	 */
 	public function manageRoomsAction(Request $request) {
-		$currentUser=$this->container->get ( 'security.context' )->getToken ()->getUser ();
-		if ($this->getUser ()->getRooms ()->count () != null) {
-			 
-			
-			$users = $this->getDoctrine ()->getRepository ( 'VideoConferenceWebsiteBundle:User' )->findAll ();
-			$publicRooms = new ArrayCollection ();
-			
-			foreach ( $users as $user ) {
-				$rooms = $user->getRooms ();
-				foreach ( $rooms as $room ) {
-					if ($room->getIsPublic ()&&($room->getOwner()!==$currentUser)) {
-						$publicRooms->add ( $room );
-					}
+		$currentUser = $this->container->get ( 'security.context' )->getToken ()->getUser ();
+		
+		$users = $this->getDoctrine ()->getRepository ( 'VideoConferenceWebsiteBundle:User' )->findAll ();
+		$publicRooms = new ArrayCollection ();
+		
+		foreach ( $users as $user ) {
+			$rooms = $user->getRooms ();
+			foreach ( $rooms as $room ) {
+				if ($room->getIsPublic () && ($room->getOwner () !== $currentUser)) {
+					$publicRooms->add ( $room );
 				}
 			}
-			
+		}
+		if (($this->getUser ()->getRooms ()->count () != null) && ($publicRooms->count () != null)) {
 			return $this->render ( "VideoConferenceWebsiteBundle:Default:manageRooms.html.twig", array (
 					'rooms' => $this->getUser ()->getRooms (),
-					'publicRooms' => $publicRooms, 
+					'publicRooms' => $publicRooms 
+			) );
+		} else if (($this->getUser ()->getRooms ()->count () == null) && ($publicRooms->count () != null)) {
+			return $this->render ( "VideoConferenceWebsiteBundle:Default:manageRooms.html.twig", array (
+					'rooms' => null,
+					'publicRooms' => $publicRooms 
+			) );
+		} else if (($this->getUser ()->getRooms ()->count () != null) && ($publicRooms->count () == null)) {
+			return $this->render ( "VideoConferenceWebsiteBundle:Default:manageRooms.html.twig", array (
+					'rooms' => $this->getUser ()->getRooms (),
+					'publicRooms' => null 
 			) );
 		} else {
 			return $this->render ( "VideoConferenceWebsiteBundle:Default:manageRooms.html.twig", array (
-					'rooms' => null 
+					'rooms' => null,
+					'publicRooms' => null 
 			) );
 		}
 	}
 	
 	/**
+	 * Deletes a room, but first generates a confirmation form for the action.
+	 * Only the current user's rooms can be deleted.
+	 *
 	 * @Route("/delete_room/{id}",name="default_delete_room")
 	 * @ParamConverter("room", class="VideoConferenceWebsiteBundle:Room")
 	 * @Security("has_role('ROLE_USER')")
@@ -126,7 +147,6 @@ class DefaultController extends Controller {
 		
 		$deleteForm->handleRequest ( $request );
 		
-		// Ha valid a form és a szoba az adott userhez tartozik, akkor törli
 		if ($deleteForm->isValid () && $room->getOwner () == $this->get ( 'security.context' )->getToken ()->getUser ()) {
 			if ($deleteForm->get ( 'delete' )->isClicked ()) {
 				$em = $this->getDoctrine ()->getManager ();
@@ -143,6 +163,8 @@ class DefaultController extends Controller {
 	}
 	
 	/**
+	 * Generates a form for room modifications, and modifies the room by the form values.
+	 *
 	 * @Route("/modify_room/{id}",name="default_modify_room")
 	 * @Security("has_role('ROLE_USER')")
 	 */
@@ -185,6 +207,8 @@ class DefaultController extends Controller {
 	}
 	
 	/**
+	 * Generates a form for user modification and modifies the user by the form values
+	 *
 	 * @Route("/modify_user",name="default_modify_user")
 	 * @Security("has_role('ROLE_USER')")
 	 */
@@ -256,8 +280,8 @@ class DefaultController extends Controller {
 		$joinedUsers = new ArrayCollection ();
 		$joinedUsers = $room->getJoinedUsers ();
 		
-		if(!$joinedUsers->contains($user)){		
-		$joinedUsers->add ( $user );
+		if (! $joinedUsers->contains ( $user )) {
+			$joinedUsers->add ( $user );
 		}
 		
 		$room->setJoinedUsers ( $joinedUsers );
@@ -270,51 +294,71 @@ class DefaultController extends Controller {
 		) );
 	}
 	
-
-	
-	
 	/**
+	 * Deletes the user and its rooms, but first generates a confirmation form
+	 *
 	 * @Route("/delete_user",name="default_delete_user")
 	 * @Security("has_role('ROLE_USER')")
 	 */
 	public function deleteUserAction(Request $request) {
-		
 		$user = $this->container->get ( 'security.context' )->getToken ()->getUser ();
 		
 		$formData = array (
-				'user_id' => $user->getId ()
+				'user_id' => $user->getId () 
 		);
-	
+		
 		$deleteForm = $this->createFormBuilder ( $formData )->setAction ( $this->generateUrl ( 'default_delete_user', array (
-				'id' => $user->getId ()
+				'id' => $user->getId () 
 		) ) )->setMethod ( 'DELETE' )->add ( 'user_id', 'hidden' )->add ( 'delete', 'submit', array (
 				'attr' => array (
-						'class' => 'button'
-				)
+						'class' => 'button' 
+				) 
 		) )->add ( 'cancel', 'submit', array (
 				'attr' => array (
-						'class' => 'button'
-				)
+						'class' => 'button' 
+				) 
 		) )->getForm ();
-	
+		
 		$deleteForm->handleRequest ( $request );
-	
-		// Ha valid a form és a szoba az adott userhez tartozik, akkor törli
-		if ($deleteForm->isValid ()&&$user!=null) {
+		
+		if ($deleteForm->isValid () && $user != null) {
 			if ($deleteForm->get ( 'delete' )->isClicked ()) {
 				$em = $this->getDoctrine ()->getManager ();
-				foreach ( $user->getRooms() as $room ) {
-					$em->remove($room);
+				foreach ( $user->getRooms () as $room ) {
+					$em->remove ( $room );
 				}
 				$em->remove ( $user );
 				$em->flush ();
 			}
-			$this->container->get('session')->invalidate(1);
+			$this->container->get ( 'session' )->invalidate ( 1 );
 			return $this->redirectToRoute ( 'fos_user_security_logout' );
 		}
-	
+		
 		return $this->render ( "VideoConferenceWebsiteBundle:Default:deleteUser.html.twig", array (
-				'delete_form' => $deleteForm->createView ()
+				'delete_form' => $deleteForm->createView () 
 		) );
 	}
+	/*
+	 * /**
+	 *
+	 *
+	 * @Route("/user_logout",name="default_user_logout")
+	 * @Security("has_role('ROLE_USER')")
+	 */
+	/*
+	 * public function userLogoutAction(Request $request) {
+	 *
+	 * $user = $this->container->get ( 'security.context' )->getToken ()->getUser ();
+	 * $em = $this->getDoctrine ()->getManager ();
+	 * $user->setRoomsJoined(null);
+	 * $em->flush();
+	 *
+	 *
+	 *
+	 * return $this->redirectToRoute('fos_user_security_logout');
+	 * }
+	 */
 }
+
+
+

@@ -1,13 +1,5 @@
-
-{% extends "FOSUserBundle::layout.html.twig" %}
-{% block title %}
-{{ "Register" }}
-{% endblock %}
-{#Ez a layout.html.twig-t�l �r�k�lt fos_user_content blokk#}
-	{% block fos_user_content %} 
-	{#Ebben az include-ban van maga a regisztrációs form#}
-	{% include
-	"FOSUserBundle:Registration:register_content.html.twig" %}
-	{#Ez meg az egyéb saját okosság#}
-	{% endblock fos_user_content %}
+ {% extends "FOSUserBundle::layout.html.twig" %} {% block title %} {%
+trans %}Register{% endtrans %} {% endblock %} {% block fos_user_content
+%} {% include "FOSUserBundle:Registration:register_content.html.twig" %}
+{% endblock fos_user_content %}
 

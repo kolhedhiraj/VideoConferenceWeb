@@ -4,29 +4,28 @@ head %}
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 <script type="text/javascript">7
-var flashvars1 = {notifyJS:"false"};
-var flashvars2={notifyJS:"true"};
+var flashvars = {notifyJS:"true",rtmpUrl:'rtmp://localhost/VideoConferenceStreaming/{{ room.getId() }}',
+		userId:{{ user.getId() }},roomToken:'{{ room.getToken() }}'};
 var params = {};
 var attributes = {};
-swfobject.embedSWF("/web/VideoConferenceFlash.swf", "publishStream", "640", "500", "9.0.0",false, flashvars1, params, attributes);
-//swfobject.embedSWF("/web/VideoConferenceFlash.swf", "playStream", "640", "500", "9.0.0",false, flashvars2, params, attributes);
 
-function flashReady() {
-	var userId="{{ user.getId() }}";
-	var userName="{{ user.getUsername() }}";
-	var roomId="{{ room.getId() }}";
-	var roomToken="{{ room.getToken() }}";
-	   document.getElementById("publishStream").publishWebcam('rtmp://localhost/VideoConferenceStreaming/'+roomId, userId, userId,userName,roomId,roomToken);
-	  // document.getElementById("playStream").playStream('rtmp://localhost/VideoConferenceStreaming/'+roomId, userId, userId,userName,roomToken);
-	}
+function flashReady() {	
+	   document.getElementById("stream").publishWebcam();
+}
+	  
+function videoConferenceEvent(message,param){
+	if(message==="publishing"){
+		console.log("jkaskdjlkasjdkl");
+	//document.getElementById("stream").playStream();
+}
+}
+
+swfobject.embedSWF("/web/VideoConferenceFlash.swf", "stream", "100%", "500", "9.0.0",false, flashvars, params, attributes);
+
 </script>
 {% endblock %} {% block content %}
-<table>
-	<tr>
-		<td><div id="publishStream" style="margin: 0 auto;"></div></td>
-		<td><div id="playStream" style="margin: 0 auto;"></div></td>
-	</tr>
-</table>
+<div id="stream" style="margin: 0 auto;"></div>
+
 
 
 

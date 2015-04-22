@@ -9,6 +9,7 @@ Modify: Módosítás
 Rooms: Szobák
 Create room: Szoba létrehozása
 There are no rooms: Nincsenek szobák
+There are no public rooms: Nincsenek publikus szobák
 Name: Név
 Description: Leírás
 Max users: Max felhasználó
@@ -41,4 +42,8 @@ No: Nem
 Joined users: Felhasználók
 Own rooms: Saját szobák
 Public rooms: Publikus szobák
+Bad credentials: Rossz adatok
+Login: Bejelentkezés
+Register: Regisztráció
+Confirmed: Megerősítve
 

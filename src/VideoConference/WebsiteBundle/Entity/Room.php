@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Szoba a videokonferenciához
+ * Room for te video condference
+ *  @author Robert Szabados
  *
  * @ORM\Table(name="room")
  * @ORM\Entity()
@@ -34,7 +35,7 @@ class Room {
 	 */
 	protected $description;
 	/**
-	 * Hivatkozunk a felhasználóra (Users)
+	 * 
 	 * @ORM\JoinColumn(name="owner_id",nullable=false,referencedColumnName="id")
 	 * @ORM\ManyToOne(targetEntity="User")
 	 */
@@ -60,6 +61,9 @@ class Room {
 	 */
 	protected $joinedUsers;
 	
+	/**
+	 * Getters and setters
+	 */
 	public function getId() {
 		return $this->id;
 	}

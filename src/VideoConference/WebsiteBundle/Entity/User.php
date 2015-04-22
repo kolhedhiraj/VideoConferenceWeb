@@ -10,7 +10,9 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
+ * User entity for the video conference
  * VideoConference\LogInBundle\Entity
+ * @author Robert Szabados
  *
  * @ORM\Table(name="fos_user")
  * @ORM\Entity()
@@ -46,6 +48,9 @@ class User extends BaseUser {
 	 **/
 	protected $roomsJoined;
 	
+	/**
+	 * Getters and setters
+	 */
 	public function getFirstName() {
 		return $this->firstName;
 	}

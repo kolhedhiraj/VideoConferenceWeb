@@ -9,12 +9,17 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 class LocaleListener implements EventSubscriberInterface {
 
     private $defaultLocale;
-
+/**
+ * Sets the defaultLocale variable to "en" (english)
+ * @param string $defaultLocale
+ */
     public function __construct($defaultLocale = "en") {
         $this->defaultLocale = $defaultLocale;
     }
 
-    // Feliratkozunk a REQUEST eventre iratkozunk fel az onKernelRequest listenerrel
+    /**
+     * Subscribes to the REQUEST event with the onKernelRequest listener
+     */
     public static function getSubscribedEvents() {
         return array(
             KernelEvents::REQUEST => array(
@@ -26,14 +31,16 @@ class LocaleListener implements EventSubscriberInterface {
         );
     }
 
+    /**
+     * The onKernelRequest listener.
+     * Gets the request's locale and puts it in the session
+     * @param GetResponseEvent $event allows to create a response for a request
+     */
     public function onKernelRequest(GetResponseEvent $event) {
         $request = $event->getRequest();
-        // ha nincs session-ünk, akkor nem csinálunk semmit
-        // megnézzük, hogy a request-ben van-e locale változónk
         if ($locale = $request->attributes->get('_locale')) {
             $request->getSession()->set('_locale', $locale);
         } else {
-            // ha a session-ben nincs _locale, akkor a default-ot rakjuk bele
             $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
         }
     }

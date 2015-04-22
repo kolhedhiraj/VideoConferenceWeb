@@ -9,14 +9,13 @@ title %} {% trans %}Rooms{% endtrans %} {% endblock %} {% block head %}
 {% endif %} {% endblock %} {% block content %}
 
 <div>
+	<label style="text-align: center;font-size: 1.4em;margin-bottom: 1em;">{% trans %}Own rooms{% endtrans %}</label>
 	{% if is_granted('ROLE_USER') %} {% if rooms is null%}
-	<div style="text-align: center;">
-		<label>{% trans %}There are no rooms{% endtrans %}</label> <a
+	<div style="text-align: center;"> <a
 			href={{ path("default_create_room") }} class="button">{% trans %}Create room{%
 			endtrans %}</a>
 	</div>
 	{% else %}
-	<label style="text-align: center;font-size: 1.4em;margin-bottom: 1em;">{% trans %}Own rooms{% endtrans %}</label>
 	<table>
 		<th>{% trans %}Name{% endtrans %}</th>
 		<th>{% trans %}Description{% endtrans %}</th>
@@ -50,8 +49,14 @@ title %} {% trans %}Rooms{% endtrans %} {% endblock %} {% block head %}
 	</table>
 	{% endif %} {% endif %}
 </div>
+
+						{#//////////////////Public rooms//////////////////#}
 <div>
 <label style="text-align: center;font-size: 1.4em;margin-bottom: 1em;">{% trans %}Public rooms{% endtrans %}</label>
+{% if is_granted('ROLE_USER') %} {% if publicRooms is null%}
+	<div style="text-align: center;">
+		<label>{% trans %}There are no public rooms{% endtrans %}</label> 
+			{% else %}
 <table>
 		<th>{% trans %}Name{% endtrans %}</th>
 		<th>{% trans %}Description{% endtrans %}</th>
@@ -79,6 +84,7 @@ title %} {% trans %}Rooms{% endtrans %} {% endblock %} {% block head %}
 		</tr>
 		{% endfor %}
 	</table>
+	{% endif %}{% endif %}
 </div>
 
 
