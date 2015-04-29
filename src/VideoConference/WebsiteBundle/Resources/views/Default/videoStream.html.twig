@@ -4,8 +4,8 @@ head %}
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 <script type="text/javascript">7
-var flashvars = {notifyJS:"true",rtmpUrl:'rtmp://localhost/VideoConferenceStreaming/{{ room.getId() }}',
-		userId:{{ user.getId() }},roomToken:'{{ room.getToken() }}'};
+var flashvars = {notifyJS:"true",rtmpUrl:'rtmp://{{ rtmpServerAddress }}/VideoConferenceStreaming/{{ room.getId() }}',
+		userId:{{ user.id }},roomToken:'{{ room.token }}', userName: '{{ user.username }}'};
 var params = {};
 var attributes = {};
 
@@ -20,7 +20,7 @@ function videoConferenceEvent(message,param){
 }
 }
 
-swfobject.embedSWF("/web/VideoConferenceFlash.swf", "stream", "100%", "500", "9.0.0",false, flashvars, params, attributes);
+swfobject.embedSWF("{{ asset('swf/VideoConferenceFlash.swf')}}", "stream", "100%", "500", "9.0.0",false, flashvars, params, attributes);
 
 </script>
 {% endblock %} {% block content %}
