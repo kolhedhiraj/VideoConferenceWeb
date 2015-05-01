@@ -40,7 +40,6 @@ class User extends BaseUser {
 	protected $lastName;
 	/**
 	 * @ORM\OneToMany(targetEntity="Room",mappedBy="owner")
-	 * 
 	 */
 	protected $rooms;
 	/**

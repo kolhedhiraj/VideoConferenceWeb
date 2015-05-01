@@ -37,7 +37,7 @@ class Room {
 	/**
 	 * 
 	 * @ORM\JoinColumn(name="owner_id",nullable=false,referencedColumnName="id")
-	 * @ORM\ManyToOne(targetEntity="User")
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="rooms")
 	 */
 	protected $owner;
 	
